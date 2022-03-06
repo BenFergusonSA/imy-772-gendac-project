@@ -31,6 +31,16 @@ Requirements:
 
 [TO BE COMPLETED]
 
+## Contributing
+
+The repo makes use of gitflow workflow process [Explained here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow#:~:text=Gitflow%20is%20a%20legacy%20Git,software%20development%20and%20DevOps%20practices.)
+
+How to contribute to this project:
+1) Create a branch according to the gitflow workflow
+2) Implement the task/fix
+3) Create a pull request into the appropriate branch
+4) Once approved then merge branch
+
 ## Tech Stack
 
 **Devops:**
