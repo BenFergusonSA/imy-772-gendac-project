@@ -8,7 +8,7 @@ const routes: Routes = [
     component: PortalComponent,
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadChildren: () => import('src/app/modules/dashboard/dashboard.module').then(mod => mod.DashboardModule),
       },
     ]
