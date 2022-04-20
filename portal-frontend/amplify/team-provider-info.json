@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gendacportal-dev-80138-authRole",
+      "UnauthRoleArn": "arn:aws:iam::741235147060:role/amplify-gendacportal-dev-80138-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::741235147060:role/amplify-gendacportal-dev-80138-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-gendacportal-dev-80138-deployment",
+      "UnauthRoleName": "amplify-gendacportal-dev-80138-unauthRole",
+      "StackName": "amplify-gendacportal-dev-80138",
+      "StackId": "arn:aws:cloudformation:eu-west-1:741235147060:stack/amplify-gendacportal-dev-80138/5b51c0b0-c06f-11ec-80f3-02c1e8913985",
+      "AmplifyAppId": "d3uk7dyd64ib7l"
+    },
+    "categories": {
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d3uk7dyd64ib7l",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
