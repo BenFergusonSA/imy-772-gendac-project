@@ -22,4 +22,8 @@ export class AuthService {
       return false;
     }
   }
+
+  isAuthenticated() {
+    return this.currentAuthenticatedUser.getValue() !== null;
+  }
 }

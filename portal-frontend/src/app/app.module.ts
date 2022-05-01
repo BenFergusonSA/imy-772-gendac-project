@@ -9,6 +9,7 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {AuthenticatedUserGuard} from "./shared/guards/authenticated-user.guard";
 
 registerLocaleData(en);
 
@@ -22,7 +23,7 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [{ provide: NZ_I18N, useValue: en_US }, AuthenticatedUserGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
