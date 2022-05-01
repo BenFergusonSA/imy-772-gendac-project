@@ -33,7 +33,8 @@ export class LoginComponentComponent implements OnInit {
     const hasSignedInSuccessfully = await this.authService.signIn(email, password);
 
     if (!hasSignedInSuccessfully) {
-      this.loginState.onFailure('Sorry, you could not be logged in.')
+      this.loginState.onFailure('Sorry, you could not be logged in.');
+      console.log(this.loginState.hasError);
       return;
     }
 
