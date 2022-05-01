@@ -14,6 +14,7 @@
         </nz-input-group>
       </nz-form-control>
     </nz-form-item>
+    <nz-alert ngif="loginState." nzType="error" [nzMessage]="loginState.errorMessage"></nz-alert>
     <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
   </form>
 </div>
