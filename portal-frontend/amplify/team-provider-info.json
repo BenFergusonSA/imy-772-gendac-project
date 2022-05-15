@@ -17,6 +17,9 @@
           "appId": "d3uk7dyd64ib7l",
           "type": "manual"
         }
+      },
+      "auth": {
+        "gendacportal58050eae": {}
       }
     }
   }

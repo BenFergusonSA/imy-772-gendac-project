@@ -5,6 +5,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzInputModule} from "ng-zorro-antd/input";
+import { NzAlertModule } from 'ng-zorro-antd/alert';
 
 @NgModule({
   exports: [
@@ -13,6 +14,7 @@ import {NzInputModule} from "ng-zorro-antd/input";
     NzFormModule,
     NzButtonModule,
     NzInputModule,
+    NzAlertModule
   ]
 })
 export class NgZorroModule { }
