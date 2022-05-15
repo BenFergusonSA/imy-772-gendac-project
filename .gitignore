@@ -143,3 +143,6 @@ fabric.properties
 .idea/codestream.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/webstorm,angular
+portal-frontend/.vscode/
+
+.vscode/
