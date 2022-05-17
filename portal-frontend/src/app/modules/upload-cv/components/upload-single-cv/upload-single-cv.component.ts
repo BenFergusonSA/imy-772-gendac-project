@@ -50,7 +50,9 @@ export class UploadSingleCvComponent implements OnInit {
       formData.append(formDetail, formDetails[formDetail])
     })
 
-    this.uploadCvService.uploadSingleCv(formData).subscribe({
+    formDetails.fileName = this.fileList[0].name.replace(" ", "_");
+    //Changed to formDetails because we couldn't to a multidata/form-data upload
+    this.uploadCvService.uploadSingleCv(formDetails).subscribe({
       next: () => {
         this.uploadState.onSuccess();
         this.notification.create(
