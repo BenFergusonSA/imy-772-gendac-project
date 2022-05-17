@@ -1,8 +1,21 @@
 <nz-layout class="app-layout">
   <nz-layout>
     <nz-header>
-      <div class="app-header">
+      <div id="app-header-logo">
         <img src="assets/images/GendacLogo.png" alt="">
+      </div>
+      <div></div>
+      <div id="app-header-actions">
+        <nz-space [nzSize]="14">
+
+          <button *nzSpaceItem nz-button nzType="text" [routerLink]="['/portal/dashboard']" >Dashboard</button>
+          <button *nzSpaceItem nz-button nzType="primary" [routerLink]="['/portal/upload-cv']">Upload CV</button>
+          <button *nzSpaceItem nz-button nzType="text" nzShape="circle" id="user-button"
+                  nz-popover nzPopoverTitle="Account" [nzPopoverContent]="accountPopOverContent" nzPopoverTrigger="click" nzPopoverPlacement="bottomRight">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+          </button>
+        </nz-space>
+
       </div>
     </nz-header>
     <nz-content>
@@ -12,3 +25,10 @@
     </nz-content>
   </nz-layout>
 </nz-layout>
+
+
+<ng-template #accountPopOverContent>
+  <div>
+    <button nz-button nzType="primary" nzBlock (click)="logout()">Logout</button>
+  </div>
+</ng-template>

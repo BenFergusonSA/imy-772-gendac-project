@@ -11,7 +11,12 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('src/app/modules/dashboard/dashboard.module').then(mod => mod.DashboardModule),
-        canActivate: [AuthenticatedUserGuard]
+        // canActivate: [AuthenticatedUserGuard]
+      },
+      {
+        path: 'upload-cv',
+        loadChildren: () => import('src/app/modules/upload-cv/upload-cv.module').then(mod => mod.UploadCvModule),
+        // canActivate: [AuthenticatedUserGuard]
       },
     ]
   }
