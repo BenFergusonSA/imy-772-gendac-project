@@ -12,7 +12,7 @@ export class UploadCvService {
 
   async uploadSingleCv(file: NzUploadFile) {
     const timeStamp = new Date().toISOString();
-    const fileName = `${timeStamp}-${file.filename}`;
+    const fileName = `${timeStamp}-${file.name}`;
     try {
       await Storage.put(fileName, file);
     } catch (error) {
