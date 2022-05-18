@@ -80,7 +80,7 @@
     </div>
 
     <div nz-col [nzSpan]="24" id="form-action">
-      <button nz-button nzType="primary" [disabled]="!uploadCvForm.valid || fileList.length === 0" [nzLoading]="uploading">
+      <button nz-button nzType="primary" [disabled]="!uploadCvForm.valid || fileList.length === 0" [nzLoading]="uploading" (click)="handleUpload()">
         {{ uploading ? 'Uploading' : 'Start Upload' }}
       </button>
 

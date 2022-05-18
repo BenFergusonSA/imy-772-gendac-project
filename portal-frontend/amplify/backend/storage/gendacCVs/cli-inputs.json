@@ -1,0 +1,13 @@
+{
+  "resourceName": "gendacCVs",
+  "policyUUID": "3c79a32e",
+  "bucketName": "gendac-cvs",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "triggerFunction": "S3Trigger80271673",
+  "groupAccess": {}
+}

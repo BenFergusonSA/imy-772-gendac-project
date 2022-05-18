@@ -33,42 +33,44 @@ export class UploadSingleCvComponent implements OnInit {
     return false;
   };
 
-  handleUpload(): void {
+  async handleUpload(): Promise<void> {
     if (!this.uploadCvForm.valid) {
       return;
     }
 
     this.uploadState.startLoader();
 
-    const formData = new FormData();
-    this.fileList.forEach((file: any) => {
-      formData.append('files[]', file);
-    });
+    // const formData = new FormData();
+    // this.fileList.forEach((file: any) => {
+    //   formData.append('files[]', file);
+    // });
+    //
+    // const formDetails = this.uploadCvForm.getRawValue();
+    // Object.keys(formDetails).forEach((formDetail) => {
+    //   formData.append(formDetail, formDetails[formDetail])
+    // })
 
-    const formDetails = this.uploadCvForm.getRawValue();
-    Object.keys(formDetails).forEach((formDetail) => {
-      formData.append(formDetail, formDetails[formDetail])
-    })
+    await this.uploadCvService.uploadSingleCv(this.fileList[0]);
 
-    this.uploadCvService.uploadSingleCv(formData).subscribe({
-      next: () => {
-        this.uploadState.onSuccess();
-        this.notification.create(
-          'success',
-          'Upload CV',
-          'The CV has successfully been uploaded.'
-        );
-      },
-      error: (error) => {
-        console.error('Error Failed to upload CV', error)
-        this.uploadState.onFailure('Failed to upload CV');
-        this.notification.create(
-          'error',
-          'Upload CV',
-          'The CV has failed to be uploaded'
-        );
-      }
-    })
+    // this.uploadCvService.uploadSingleCv(formData).subscribe({
+    //   next: () => {
+    //     this.uploadState.onSuccess();
+    //     this.notification.create(
+    //       'success',
+    //       'Upload CV',
+    //       'The CV has successfully been uploaded.'
+    //     );
+    //   },
+    //   error: (error) => {
+    //     console.error('Error Failed to upload CV', error)
+    //     this.uploadState.onFailure('Failed to upload CV');
+    //     this.notification.create(
+    //       'error',
+    //       'Upload CV',
+    //       'The CV has failed to be uploaded'
+    //     );
+    //   }
+    // })
   }
 
 }
