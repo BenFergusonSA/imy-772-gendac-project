@@ -3,10 +3,10 @@
 
 const AWSConfig = {
   "aws_project_region": "eu-west-1",
-  "aws_cognito_identity_pool_id": "eu-west-1:d4cc4bc0-aa90-4e53-9707-61fe6da43b65",
+  "aws_cognito_identity_pool_id": "eu-west-1:162bddd0-e3bf-44ec-a224-828cf7362614",
   "aws_cognito_region": "eu-west-1",
-  "aws_user_pools_id": "eu-west-1_T1EmwjFvy",
-  "aws_user_pools_web_client_id": "2nlk3kg7jr0b33hqpctvhqev4q",
+  "aws_user_pools_id": "eu-west-1_EHOma2t5P",
+  "aws_user_pools_web_client_id": "78j55n1dp5inbfl67k2p6ogkv7",
   "oauth": {},
   "aws_cognito_username_attributes": [
     "EMAIL"
