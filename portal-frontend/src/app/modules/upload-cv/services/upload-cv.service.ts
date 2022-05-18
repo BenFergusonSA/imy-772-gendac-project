@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import { Storage } from 'aws-amplify';
+import {Injectable} from '@angular/core';
+import {Storage} from 'aws-amplify';
 import {NzUploadFile} from "ng-zorro-antd/upload";
 
 @Injectable({
@@ -8,14 +7,17 @@ import {NzUploadFile} from "ng-zorro-antd/upload";
 })
 export class UploadCvService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor() {
+  }
 
   async uploadSingleCv(file: NzUploadFile) {
+    const timeStamp = new Date().toISOString();
+    const fileName = `${timeStamp}-${file.filename}`;
     try {
-      await Storage.put('test.pdf', file);
-      console.log('Uploaded');
+      await Storage.put(fileName, file);
     } catch (error) {
       console.log("Error uploading file: ", error);
+      throw Error('Failed to upload CV');
     }
   }
 }
