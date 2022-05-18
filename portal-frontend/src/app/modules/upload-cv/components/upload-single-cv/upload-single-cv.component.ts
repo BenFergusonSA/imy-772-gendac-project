@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NzUploadFile} from "ng-zorro-antd/upload";
 import {LoaderStateModel} from "../../../../shared/models/loader-state.model";
@@ -11,12 +11,12 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
   styleUrls: ['./upload-single-cv.component.less']
 })
 export class UploadSingleCvComponent implements OnInit {
-  uploading = false;
   fileList: NzUploadFile[] = [];
   uploadCvForm!: FormGroup;
   uploadState: LoaderStateModel = new LoaderStateModel();
 
-  constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService) { }
+  constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService) {
+  }
 
   ngOnInit(): void {
     this.uploadCvForm = this.fb.group({
@@ -40,37 +40,23 @@ export class UploadSingleCvComponent implements OnInit {
 
     this.uploadState.startLoader();
 
-    // const formData = new FormData();
-    // this.fileList.forEach((file: any) => {
-    //   formData.append('files[]', file);
-    // });
-    //
-    // const formDetails = this.uploadCvForm.getRawValue();
-    // Object.keys(formDetails).forEach((formDetail) => {
-    //   formData.append(formDetail, formDetails[formDetail])
-    // })
+    try {
+      await this.uploadCvService.uploadSingleCv(this.fileList[0]);
 
-    await this.uploadCvService.uploadSingleCv(this.fileList[0]);
-
-    // this.uploadCvService.uploadSingleCv(formData).subscribe({
-    //   next: () => {
-    //     this.uploadState.onSuccess();
-    //     this.notification.create(
-    //       'success',
-    //       'Upload CV',
-    //       'The CV has successfully been uploaded.'
-    //     );
-    //   },
-    //   error: (error) => {
-    //     console.error('Error Failed to upload CV', error)
-    //     this.uploadState.onFailure('Failed to upload CV');
-    //     this.notification.create(
-    //       'error',
-    //       'Upload CV',
-    //       'The CV has failed to be uploaded'
-    //     );
-    //   }
-    // })
+      this.uploadState.onSuccess();
+      this.notification.create(
+        'success',
+        'Upload CV',
+        'The CV has successfully been uploaded.'
+      );
+    } catch (error) {
+      this.uploadState.onFailure('Failed to upload CV');
+      this.notification.create(
+        'error',
+        'Upload CV',
+        'The CV has failed to be uploaded'
+      );
+    }
   }
 
 }
