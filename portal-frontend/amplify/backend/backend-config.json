@@ -7,7 +7,7 @@
     }
   },
   "auth": {
-    "gendacportal58050eae": {
+    "gendacportal34aac0f2": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -45,17 +45,7 @@
     "gendacCVs": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "S3Trigger80271673",
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
-        }
-      ]
+      "dependsOn": []
     }
   }
 }

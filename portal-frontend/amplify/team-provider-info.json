@@ -19,7 +19,9 @@
         }
       },
       "auth": {
-        "gendacportal58050eae": {}
+        "gendacportal58050eae": {},
+        "true": {},
+        "gendacportal34aac0f2": {}
       },
       "function": {
         "S3Trigger80271673": {
