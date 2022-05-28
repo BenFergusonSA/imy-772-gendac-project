@@ -10,6 +10,8 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 
 @NgModule({
   exports: [
@@ -22,7 +24,9 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
     NzPopoverModule,
     NzSpaceModule,
     NzUploadModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzCardModule,
+    NzGridModule
   ]
 })
 export class NgZorroModule { }

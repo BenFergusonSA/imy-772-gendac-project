@@ -1,1 +1,145 @@
-<h1 nz-typography>Dashboard</h1>
+<!-- <h1 nz-typography>Dashboard</h1> -->
+<!-- <div > -->
+  <div nz-row [nzGutter]="24" class="page-container">
+      <div nz-col [nzSpan]="18" class="main">
+        <div nz-row [nzGutter]="[24,24]">
+          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="8" class="gutter-row" *ngFor="let position of positions">
+            <app-basic-card [name]=position.name [skills]=position.skills [education]=position.education [experience]=position.experience [matches]=position.matches></app-basic-card>
+          </div>
+        </div>
+
+      </div>
+
+      <div nz-col [nzSpan]="6" class="side">
+        <form nz-form>
+          <nz-form-item>
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <input type="text" nz-input placeholder="Search" />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
+            </ng-template>
+          </nz-form-item>
+        </form>
+
+        <button nz-button nzType="primary" [nzSize]="sizeL" class="uploadNew">
+          <i nz-icon nzType="upload"></i>
+          Upload New
+        </button>
+
+        <button nz-button nzType="primary" [nzSize]="sizeL" class="newPosition">
+          <i nz-icon nzType="plus-circle" nzTheme="outline"></i>Create new position
+        </button>
+
+        <hr />
+
+        <div class="stats">
+          <h3>Statistics</h3>
+          <div class="stat">
+            <i nz-icon nzType="user"></i><span>Total CVs: </span><b>1,322</b>
+            <br />
+            <i nz-icon nzType="file-text" nzTheme="outline"></i><span>Position Templates: </span><b>6</b>
+          </div>
+        </div>
+
+        <hr />
+
+        <button nz-button nzType="primary" [nzSize]="sizeL" class="viewAll">
+          View All CVs
+        </button>
+
+
+      </div>
+  </div>
+
+
+<!-- <form nz-form nzLayout="vertical">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzFor="firstName">First Name</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="First Name"
+            formControlName="firstName"
+            id="firstName"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzFor="surname">Surname</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="Surname"
+            formControlName="surname"
+            id="surname"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzFor="email">Email Address</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="Email Address"
+            formControlName="email"
+            id="email"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="12">
+      <nz-form-item>
+        <nz-form-label nzFor="phoneNumber">Phone Number</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="Phone Number"
+            formControlName="phoneNumber"
+            id="phoneNumber"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="24">
+      <nz-form-item>
+        <nz-form-label nzFor="phoneNumber">ID Number</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            placeholder="ID Number"
+            formControlName="idNumber"
+            id="idNumber"
+          />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="24">
+      <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+        <button nz-button>
+          <i nz-icon nzType="upload"></i>
+          Select File
+        </button>
+      </nz-upload>
+    </div>
+
+    <div nz-col [nzSpan]="24" id="form-action">
+      <button nz-button nzType="primary" [disabled]="!uploadCvForm.valid || fileList.length === 0" [nzLoading]="uploadState.isLoading" (click)="handleUpload()">
+        {{ uploadState.isLoading ? 'Uploading' : 'Start Upload' }}
+      </button>
+    </div>
+  </div>
+</form>
+ -->
+<!-- </div> -->
