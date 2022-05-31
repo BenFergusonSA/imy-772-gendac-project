@@ -12,6 +12,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 @NgModule({
   exports: [
@@ -26,7 +27,8 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
     NzUploadModule,
     NzNotificationModule,
     NzCardModule,
-    NzGridModule
+    NzGridModule,
+    NzCollapseModule
   ]
 })
 export class NgZorroModule { }
