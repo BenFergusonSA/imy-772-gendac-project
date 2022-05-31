@@ -1,14 +1,9 @@
-import sys, fitz
+from pdfminer.high_level import extract_text
 import spacy
 from spacy import displacy
 
 def convertToText(fname):
-    doc = fitz.open(fname)
-    text=""
-    for page in doc:
-        text = text + str(page.get_text())
-    tx = " ".join(text.split("\n"))
-    return tx
+    return extract_text(fname)
 
 nlp = spacy.load("en_core_web_lg")
 
