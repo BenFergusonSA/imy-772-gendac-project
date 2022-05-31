@@ -148,3 +148,5 @@ portal-frontend/.vscode/
 .vscode/
 
 cv-backend/.env
+
+cv-backend/storage/
