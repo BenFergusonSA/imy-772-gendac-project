@@ -28,7 +28,7 @@ export class ViewCvsComponent implements OnInit {
       id: "",
       email: "",
       phoneNumber: "",
-      fileName: "",
+      pdfURL: "",
       skills: []
     }
   ];
@@ -61,6 +61,7 @@ export class ViewCvsComponent implements OnInit {
               email: item.email.S,
               phoneNumber: item.phoneNumber.S,
               uuid: item.uuid.S,
+              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+item.uuid.S+".pdf",
               skills: ["Loading..."],
               hasSkills: false
             }
@@ -94,6 +95,8 @@ export class ViewCvsComponent implements OnInit {
                     cv.skills = ["Processing skills..."]
                   }
                 });
+
+                console.log(outerThis.cvs);
             }};
 
           xhr2.send();
@@ -102,5 +105,12 @@ export class ViewCvsComponent implements OnInit {
 
     xhr.send();
     // End of Get Applicants
+  }
+
+  downloadPDF(url: any): any {
+
+
+
+    window.open(url, '_blank');
   }
 }

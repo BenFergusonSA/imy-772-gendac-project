@@ -31,7 +31,7 @@
         <div nz-col [nzSpan]="6" class="main">
           <nz-card>
             <div class="card-title">
-              <h3 nz-tooltip nzTooltipTitle="PDF file not available">PDF <button nz-button nzType="primary" class="dataValue" [disabled]="true">View PDF</button></h3>
+              <h3 nz-tooltip nzTooltipTitle="PDF file not available">PDF <button nz-button nzType="primary" class="dataValue" (click)="downloadPDF(cv.pdfURL)">View PDF</button></h3>
             </div>
           </nz-card>
         </div>
