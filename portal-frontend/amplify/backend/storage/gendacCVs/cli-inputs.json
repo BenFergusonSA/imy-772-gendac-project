@@ -1,0 +1,15 @@
+{
+  "resourceName": "gendacCVs",
+  "policyUUID": "3c79a32e",
+  "bucketName": "gendac-cvs",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ"
+  ],
+  "groupAccess": {}
+}

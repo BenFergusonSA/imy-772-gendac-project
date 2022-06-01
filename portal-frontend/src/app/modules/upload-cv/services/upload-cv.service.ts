@@ -1,18 +1,24 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {API_ENDPOINTS} from "../../../shared/constants/api-endpoints.constant";
+import {Injectable} from '@angular/core';
+import {Storage} from 'aws-amplify';
+import {NzUploadFile} from "ng-zorro-antd/upload";
+import * as uuid from "uuid";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadCvService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor() {
+  }
 
-  uploadSingleCv(formData: FormData) {
-    return this.httpClient.post(API_ENDPOINTS.uploadCv, formData, {
-      reportProgress: true,
-      observe: 'events'
-    })
+  async uploadSingleCv(file: NzUploadFile) {
+    const timeStamp = new Date().toISOString();
+    const fileName = uuid.v4();
+    try {
+      await Storage.put(fileName, file);
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+      throw Error('Failed to upload CV');
+    }
   }
 }
