@@ -17,7 +17,7 @@
         <div nz-col [nzSpan]="6" class="main">
           <nz-card>
             <div class="card-title">
-              <h3>Email <span class="dataValue">{{cv.email}}</span></h3>
+              <h3>Email <span class="dataValue">{{cv.email}} <a nz-icon nzType="mail" nzTheme="outline" href="mailto:{{cv.email}}?subject=Communication%20from%20Gendac%20-%20{{cv.firstName}}%20{{cv.surname}}" class="emailIcon"></a></span></h3>
             </div>
           </nz-card>
         </div>
@@ -31,14 +31,14 @@
         <div nz-col [nzSpan]="6" class="main">
           <nz-card>
             <div class="card-title">
-              <h3>PDF <button nz-button nzType="primary" class="dataValue">{{cv.fileName}}</button></h3>
+              <h3 nz-tooltip nzTooltipTitle="PDF file not available">PDF <button nz-button nzType="primary" class="dataValue" [disabled]="true">View PDF</button></h3>
             </div>
           </nz-card>
         </div>
         <div nz-col [nzSpan]="24" class="main">
           <nz-card>
             <div class="card-title">
-              <h3>Skills</h3>
+              <h3>Skills <span [hidden]="cv.hasSkills" nz-tooltip nzTooltipTitle="Refresh Page"><i nz-icon nzType='reload' nzTheme='outline' (click)="reloadPage()" class="reloadIcon"></i></span></h3>
               <div nz-row [nzGutter]="24">
                 <div  *ngFor="let skill of cv.skills" nz-col [nzSpan]="4" class="skills">
                   <nz-card [nzSize]="small" class="skillCard">

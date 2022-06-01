@@ -13,6 +13,7 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   exports: [
@@ -28,7 +29,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
     NzNotificationModule,
     NzCardModule,
     NzGridModule,
-    NzCollapseModule
+    NzCollapseModule,
+    NzToolTipModule
   ]
 })
 export class NgZorroModule { }
