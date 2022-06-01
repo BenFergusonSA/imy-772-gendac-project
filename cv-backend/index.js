@@ -2,6 +2,7 @@ import 'dotenv/config'
 import express from "express";
 import {downloadFile} from './services/s3'
 import {parseCV, readParsedResults} from './services/cv-parser'
+import {deleteTempFiles} from './services/file-helper'
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -41,6 +42,13 @@ app.post('/process-cv', async (req, res) => {
         console.error('Failed to read parsed file');
         // res.status(500).json({ success: false, message: 'Failed to read parsed file'});
         return;
+    }
+
+    const deletedFilesResponse = await deleteTempFiles();
+    console.debug('Deleted files results', deletedFilesResponse);
+    if (!parsedResults.success) {
+        console.error('Failed to delete temp files');
+        // res.status(500).json({ success: false, message: 'Failed to delete temp files'});
     }
 
     //Make request to lambda function with results

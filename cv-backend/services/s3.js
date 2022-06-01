@@ -28,7 +28,7 @@ const downloadFile = async (filename) => {
         }
         console.debug('Got S3 file, writing file');
         const __dirname = path.resolve();
-        const filePath = path.join(__dirname, STORAGE_PATH, 'temp-file.pdf');
+        const filePath = path.join(__dirname, STORAGE_PATH, 'temp.pdf');
         console.log('Saving file to', filePath);
         const file = Buffer.from(s3File.Body);
         await fs.writeFileSync(filePath, file);
