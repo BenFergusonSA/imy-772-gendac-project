@@ -10,6 +10,8 @@ export class DashboardPageComponent implements OnInit {
   sizeL: NzButtonSize = 'large';
   sizeS: NzButtonSize = 'small';
 
+  numberOfCVs: number = 0;
+
   positions: any[] = [
     {
       name: 'Position 1',
@@ -65,6 +67,18 @@ export class DashboardPageComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    const outerThis = this;
+
+    var url = "https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/db";
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        outerThis.numberOfCVs = JSON.parse(xhr.responseText)["Count"];
+      }};
+
+    xhr.send();
   }
 
 }
