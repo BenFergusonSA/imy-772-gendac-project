@@ -32,7 +32,7 @@ print(pureSkillArr)
 results = {
     "skills": pureSkillArr
 }
-resultData = json.dumps(x)
+resultData = json.dumps(results)
 f = open("../cv-backend/storage/results.json", "w")
 f.write(resultData)
 f.close()
