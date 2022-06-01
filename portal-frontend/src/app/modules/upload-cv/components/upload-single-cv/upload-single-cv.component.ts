@@ -1,10 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NzUploadFile} from "ng-zorro-antd/upload";
 import {LoaderStateModel} from "../../../../shared/models/loader-state.model";
 import {UploadCvService} from "../../services/upload-cv.service";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-upload-single-cv',
@@ -12,12 +11,12 @@ import {Router} from "@angular/router";
   styleUrls: ['./upload-single-cv.component.less']
 })
 export class UploadSingleCvComponent implements OnInit {
+  uploading = false;
   fileList: NzUploadFile[] = [];
   uploadCvForm!: FormGroup;
   uploadState: LoaderStateModel = new LoaderStateModel();
 
-  constructor(private fb: FormBuilder, private router: Router, private uploadCvService: UploadCvService, private notification: NzNotificationService) {
-  }
+  constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService) { }
 
   ngOnInit(): void {
     this.uploadCvForm = this.fb.group({
@@ -34,15 +33,17 @@ export class UploadSingleCvComponent implements OnInit {
     return false;
   };
 
-  async handleUpload(): Promise<void> {
+  handleUpload(): void {
     if (!this.uploadCvForm.valid) {
       return;
     }
 
     this.uploadState.startLoader();
 
-    try {
-      await this.uploadCvService.uploadSingleCv(this.fileList[0]);
+    const formData = new FormData();
+    this.fileList.forEach((file: any) => {
+      formData.append('files[]', file);
+    });
 
     const formDetails = this.uploadCvForm.getRawValue();
     Object.keys(formDetails).forEach((formDetail) => {
@@ -71,4 +72,5 @@ export class UploadSingleCvComponent implements OnInit {
       }
     })
   }
+
 }
