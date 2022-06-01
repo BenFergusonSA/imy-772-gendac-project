@@ -27,7 +27,7 @@
           Upload New
         </button>
 
-        <button nz-button nzType="primary" [nzSize]="sizeL" class="newPosition">
+        <button nz-button nzType="primary" [nzSize]="sizeL" class="newPosition" [routerLink]="['create-position']">
           <i nz-icon nzType="plus-circle" nzTheme="outline"></i>Create new position
         </button>
 
@@ -38,7 +38,7 @@
           <div class="stat">
             <i nz-icon nzType="user"></i><span>Total CVs: </span><b>{{numberOfCVs}}</b>
             <br />
-            <i nz-icon nzType="file-text" nzTheme="outline"></i><span>Position Templates: </span><b>6</b>
+            <i nz-icon nzType="file-text" nzTheme="outline"></i><span>Position Templates: </span><b>{{numberOfTemplates}}</b>
           </div>
         </div>
 

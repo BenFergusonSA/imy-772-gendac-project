@@ -12,62 +12,16 @@ export class DashboardPageComponent implements OnInit {
   sizeS: NzButtonSize = 'small';
 
   numberOfCVs: number = 0;
+  numberOfTemplates: number = 0;
 
   positions: any[] = [
-    {
-      name: 'Position 1',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 12
-    },
-    {
-      name: 'Position 2',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 42
-    },
-    {
-      name: 'Position 3',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 9
-    },
-    {
-      name: 'Position 4',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 27
-    },
-    {
-      name: 'Position 5',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 93
-    },
-    {
-      name: 'Position 6',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 2
-    },
-    {
-      name: 'Position 7',
-      skills: ["UI", "UX", "Development"],
-      education: ["Bachelor's Degree"],
-      experience: ["Software Development"],
-      matches: 2
-    }
+
   ];
 
   constructor() { }
 
   ngOnInit(): void {
+    // Get number of CVs
     const outerThis = this;
 
     var url = API_ENDPOINTS.getApplicants;
@@ -80,6 +34,33 @@ export class DashboardPageComponent implements OnInit {
       }};
 
     xhr.send();
+
+    // End of Get number of CVs
+
+    // Get position templates
+
+    var url2 = API_ENDPOINTS.posTemplates;
+
+    var xhr2 = new XMLHttpRequest();
+    xhr2.open("GET", url2);
+    xhr2.onreadystatechange = function () {
+      if (xhr2.readyState === 4) {
+        let temp = JSON.parse(xhr2.responseText)["Items"].map((item: { name: any; skills: any; education: any; experience: any; }) => {
+          return {
+            name: item.name.S,
+            skills: item.skills.S.split(',').join(', '),
+            education: item.education.S,
+            experience: item.experience.S,
+            matches: 0
+          }
+        });
+        outerThis.numberOfTemplates = temp.length;
+        outerThis.positions = temp;
+      }};
+
+    xhr2.send();
+
+    // End of Get position templates
   }
 
 }

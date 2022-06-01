@@ -1,0 +1,42 @@
+<h1>Create new Position Template</h1>
+
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="24">
+    <div nz-row [nzGutter]="[24,24]">
+      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="{span:12,offset:6}" [nzLg]="{span:12,offset:6}" [nzXl]="{span:8,offset:8}" class="gutter-row">
+        <nz-card>
+          <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
+              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid Name!">
+                <input nz-input formControlName="name" id="name" />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="skills">Skills</nz-form-label>
+              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid Name!">
+                <nz-select
+                  [nzMaxTagCount]="3"
+                  [nzMaxTagPlaceholder]="tagPlaceHolder"
+                  nzMode="multiple"
+                  nzPlaceHolder="Please select"
+                  [(ngModel)]="listOfSelectedValue"
+                  id="skills"
+                  formControlName="skills"
+                >
+                  <nz-option *ngFor="let skill of skillsList" [nzLabel]="skill" [nzValue]="skill"></nz-option>
+                </nz-select>
+                <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-row class="create-area">
+              <nz-form-control [nzSpan]="14" [nzOffset]="6">
+                <button nz-button nzType="primary">Create</button>
+              </nz-form-control>
+            </nz-form-item>
+          </form>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</div>
