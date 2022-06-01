@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NzSizeDSType } from 'ng-zorro-antd/core/types/size';
 import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
+import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
 
 // interface CV {
 //   firstName: string;
@@ -45,7 +46,7 @@ export class ViewCvsComponent implements OnInit {
 
   getCVData(){
     // Get Applicants
-    var url = "https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/db";
+    var url = API_ENDPOINTS.getApplicants;
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
@@ -67,7 +68,7 @@ export class ViewCvsComponent implements OnInit {
           outerThis.cvs = temp;
 
           // Get Skills
-          var url2 = "https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/db/skills";
+          var url2 = API_ENDPOINTS.getSkills;
 
           var xhr2 = new XMLHttpRequest();
           xhr2.open("GET", url2);

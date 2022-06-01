@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzButtonSize } from 'ng-zorro-antd/button';
+import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -69,7 +70,7 @@ export class DashboardPageComponent implements OnInit {
   ngOnInit(): void {
     const outerThis = this;
 
-    var url = "https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/db";
+    var url = API_ENDPOINTS.getApplicants;
 
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
