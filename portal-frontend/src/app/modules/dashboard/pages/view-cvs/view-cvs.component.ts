@@ -3,6 +3,7 @@ import { NzSizeDSType } from 'ng-zorro-antd/core/types/size';
 import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
 import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 // interface CV {
 //   firstName: string;
@@ -33,7 +34,7 @@ export class ViewCvsComponent implements OnInit {
     }
   ];
 
-  constructor(private http:HttpClient, private router: Router) {
+  constructor(private http:HttpClient, private router: Router, private notification: NzNotificationService) {
     this.getCVData();
   }
 
@@ -108,9 +109,25 @@ export class ViewCvsComponent implements OnInit {
   }
 
   downloadPDF(url: any): any {
+    const outerThis = this;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if(xhr.status === 200){
+          window.open(url, '_blank');
+        }else{
+          outerThis.notification.create(
+            'error',
+            'PDF file not available',
+            "This file doesn't seem to be available right now. Please try again later."
+          );
+        }
+        console.log(xhr.status);
+      }};
 
+    xhr.send();
 
-
-    window.open(url, '_blank');
+    // window.open(url, '_blank');
   }
 }
