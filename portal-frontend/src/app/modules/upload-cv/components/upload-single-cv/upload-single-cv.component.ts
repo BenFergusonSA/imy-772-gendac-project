@@ -41,8 +41,19 @@ export class UploadSingleCvComponent implements OnInit {
 
     this.uploadState.startLoader();
 
+    const formData = new FormData();
+    this.fileList.forEach((file: any) => {
+      formData.append('files[]', file);
+    });
+
+    const formDetails = this.uploadCvForm.getRawValue();
+    Object.keys(formDetails).forEach((formDetail) => {
+      formData.append(formDetail, formDetails[formDetail])
+    })
+
+    //formDetails.fileName123 = this.fileList[0].name.replace(" ", "_");
     try {
-      await this.uploadCvService.uploadSingleCv(this.fileList[0]);
+      await this.uploadCvService.uploadSingleCv(this.fileList[0], formDetails);
 
       this.uploadState.onSuccess();
       this.notification.create(
