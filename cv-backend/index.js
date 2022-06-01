@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from "express";
+import axios from "axios";
 import {downloadFile} from './services/s3'
 import {parseCV, readParsedResults} from './services/cv-parser'
 import {deleteTempFiles} from './services/file-helper'
@@ -13,7 +14,8 @@ app.get('/', (req, res) => {
 })
 
 app.post('/process-cv', async (req, res) => {
-    const uploadedCVFilename = req.body.uploadedCvFilename;
+    const {applicantId, applicantCVUUID} = req.body;
+    const uploadedCVFilename = 'public/' + applicantCVUUID + '.pdf';
     console.log('Uploaded CV file to download', uploadedCVFilename);
 
     const s3FileResponse = await downloadFile(uploadedCVFilename);
@@ -52,7 +54,13 @@ app.post('/process-cv', async (req, res) => {
     }
 
     //Make request to lambda function with results
-    // return res.json({ success: true, message: 'Processed CV file' })
+    await axios.post('https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/staging/upload-parsed-skills', {
+        "uuid": applicantCVUUID,
+        "skills": parsedResults.data.skills,
+        "applicant_id": applicantId
+    });
+
+    console.log('Made request to lambda');
 })
 
 app.listen(port, () => {
