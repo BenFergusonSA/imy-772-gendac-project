@@ -3,5 +3,7 @@ export const API_ENDPOINTS = {
   getApplicants: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/db',
   getSkills: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/db/skills',
   posTemplates: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates',
-  getSkillsList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/skilllist'
+  skillsList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/skilllist',
+  educationList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/educationlist',
+  experienceList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/experiencelist'
 }

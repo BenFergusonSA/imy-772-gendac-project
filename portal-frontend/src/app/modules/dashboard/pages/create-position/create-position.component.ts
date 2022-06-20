@@ -22,7 +22,7 @@ export class CreatePositionComponent implements OnInit {
   listOfSelectedValue = [];
 
   constructor(private fb: FormBuilder,private httpClient: HttpClient, private router: Router) {
-    var url = API_ENDPOINTS.getSkillsList;
+    var url = API_ENDPOINTS.skillsList;
     console.log("Loaded Page");
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);

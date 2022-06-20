@@ -20,7 +20,7 @@
             nzPlaceHolder="Please select"
             [(ngModel)]="listOfSelectedValue"
             id="skills"
-            (ngModelChange)="skillFilter()"
+            (ngModelChange)="filter()"
           >
             <nz-option *ngFor="let skill of skillsList" [nzLabel]="skill" [nzValue]="skill"></nz-option>
           </nz-select>
@@ -41,7 +41,7 @@
             nzPlaceHolder="Please select"
             [(ngModel)]="listOfSelectedEducation"
             id="skills"
-            (ngModelChange)="skillFilter()"
+            (ngModelChange)="filter()"
           >
             <nz-option *ngFor="let education of educationList" [nzLabel]="education" [nzValue]="education"></nz-option>
           </nz-select>
@@ -62,7 +62,7 @@
             nzPlaceHolder="Please select"
             [(ngModel)]="listOfSelectedExperience"
             id="skills"
-            (ngModelChange)="skillFilter()"
+            (ngModelChange)="filter()"
           >
             <nz-option *ngFor="let experience of experienceList" [nzLabel]="experience" [nzValue]="experience"></nz-option>
           </nz-select>
@@ -113,18 +113,45 @@
               </div>
             </nz-card>
           </div>
-          <div nz-col [nzSpan]="24" class="main">
+          <div nz-col [nzSpan]="8" class="main">
             <nz-card>
               <div class="card-title">
                 <h3>Skills <span [hidden]="cv.hasSkills" nz-tooltip nzTooltipTitle="Refresh Page"><i nz-icon nzType='reload' nzTheme='outline' (click)="reloadPage()" class="reloadIcon"></i></span></h3>
                 <div nz-row [nzGutter]="24">
-                  <div  *ngFor="let skill of cv.skills" nz-col [nzSpan]="4" class="skills">
+                  <div  *ngFor="let skill of cv.skills" nz-col [nzSpan]="8" class="skills">
                     <nz-card [nzSize]="small" class="skillCard">
                       <div class="card-title">{{skill}}</div>
                     </nz-card>
                   </div>
                 </div>
-
+              </div>
+            </nz-card>
+          </div>
+          <div nz-col [nzSpan]="8" class="main">
+            <nz-card>
+              <div class="card-title">
+                <h3>Education</h3>
+                <div nz-row [nzGutter]="24">
+                  <div  *ngFor="let education of cv.education" nz-col [nzSpan]="12" class="education">
+                    <nz-card [nzSize]="small" class="educationCard">
+                      <div class="card-title">{{education}}</div>
+                    </nz-card>
+                  </div>
+                </div>
+              </div>
+            </nz-card>
+          </div>
+          <div nz-col [nzSpan]="8" class="main">
+            <nz-card>
+              <div class="card-title">
+                <h3>Experience</h3>
+                <div nz-row [nzGutter]="24">
+                  <div  *ngFor="let experience of cv.experience" nz-col [nzSpan]="12" class="experience">
+                    <nz-card [nzSize]="small" class="experienceCard">
+                      <div class="card-title">{{experience}}</div>
+                    </nz-card>
+                  </div>
+                </div>
               </div>
             </nz-card>
           </div>

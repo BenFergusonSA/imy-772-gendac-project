@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
 import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import * as uuid from "uuid";
 // import { FormGroup } from '@angular/forms';
 
 // interface CV {
@@ -38,29 +39,57 @@ export class ViewCvsComponent implements OnInit {
     }
   ];
 
+
+
   skillsList: string[] = [
     "Loading..."
   ];
 
   educationList: string[] = [
-    'B.Eng', 'BEng' ,'B.Eng Electrical', 'B.Eng Electronic', 'B.Eng Computer', 'BEng Electrical', 'BEng Electronic', 'BEng Computer',
-    'BSc Computer Science', 'B.Sc Computer Science', 'BCom Informatics', 'B.Com Informatics', 'BIS',
-    'B Information Systems', 'BIT', 'B Information Technology', 'Multimedia', 'BSc', 'B.Sc', 'BSc Information and Knowledge Systems', 'B.Sc Information and Knowledge Systems'
+    'Loading...'
   ];
 
   experienceList: string[] = [
-    "Data Analyst", "Data Scientist", "Data Engineer"
+    "Loading..."
   ];
 
   listOfSelectedValue = [];
   listOfSelectedEducation = [];
   listOfSelectedExperience = [];
 
-  constructor(private http:HttpClient, private router: Router, private notification: NzNotificationService) {
+  constructor(private http:HttpClient, private router: Router, private notification: NzNotificationService, private httpClient: HttpClient) {
+      // Post Example
+    // for(let i = 0; i < this.experienceList.length; i++){
+      // let experience_id = uuid.v4();
+      // let jsonObj = {
+      //   "id": experience_id,
+      //   "skill": "Vue"
+      // }
+
+      // this.httpClient.post(API_ENDPOINTS.skillsList, jsonObj).subscribe({
+      //   next: (data) => {
+      //     console.log(data);
+      //   },
+      //   error: (err) => { console.log(err) },
+
+      // });
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.getCVData();
 
-    var url = API_ENDPOINTS.getSkillsList;
-    console.log("Loaded Page");
+    var url = API_ENDPOINTS.skillsList;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
     var outerThis = this;
@@ -81,6 +110,48 @@ export class ViewCvsComponent implements OnInit {
       }
     }
     xhr.send();
+
+    var url2 = API_ENDPOINTS.educationList;
+    var xhr2 = new XMLHttpRequest();
+    xhr2.open("GET", url2);
+    xhr2.onreadystatechange = function () {
+      if (xhr2.readyState === 4) {
+        let temp2 = JSON.parse(xhr2.responseText)["Items"].map((item: { education_id: any; education: any; }) => {
+          return {
+            id: item.education_id.S,
+            education: item.education.S
+          }
+        });
+        temp2 = temp2.sort((a: any, b: any) => {
+          return b.education.toLowerCase() < a.education.toLowerCase() ? 1 : -1;
+        });
+        outerThis.educationList = temp2.map((item: { id: any; education: any; }) => {
+          return item.education;
+        });
+      }
+    }
+    xhr2.send();
+
+    var url3 = API_ENDPOINTS.experienceList;
+    var xhr3 = new XMLHttpRequest();
+    xhr3.open("GET", url3);
+    xhr3.onreadystatechange = function () {
+      if (xhr3.readyState === 4) {
+        let temp3 = JSON.parse(xhr3.responseText)["Items"].map((item: { experience_id: any; experience: any; }) => {
+          return {
+            id: item.experience_id.S,
+            experience: item.experience.S
+          }
+        });
+        temp3 = temp3.sort((a: any, b: any) => {
+          return b.experience.toLowerCase() < a.experience.toLowerCase() ? 1 : -1;
+        });
+        outerThis.experienceList = temp3.map((item: { id: any; experience: any; }) => {
+          return item.experience;
+        });
+      }
+    }
+    xhr3.send();
   }
 
   ngOnInit(): void {
@@ -173,7 +244,7 @@ export class ViewCvsComponent implements OnInit {
                     cv.showing = false;
                   }
                 });
-                outerThis.skillFilter();
+                outerThis.filter();
             }};
 
           xhr2.send();
@@ -224,7 +295,7 @@ export class ViewCvsComponent implements OnInit {
     });
   }
 
-  skillFilter() {
+  filter() {
     this.cvs.forEach(cv => {
       let hasSkills = true;
       let hasEducation = true;
