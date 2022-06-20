@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzButtonSize } from 'ng-zorro-antd/button';
 import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
 
@@ -18,7 +19,9 @@ export class DashboardPageComponent implements OnInit {
 
   ];
 
-  constructor() { }
+  mainSearchTerm: string = "";
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     // Get number of CVs
@@ -51,8 +54,11 @@ export class DashboardPageComponent implements OnInit {
             skills: item.skills.S.split(',').join(', '),
             education: item.education.S,
             experience: item.experience.S,
-            matches: 0
+            matches: -1
           }
+        });
+        temp = temp.sort((a: any, b: any) => {
+          return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
         });
         outerThis.numberOfTemplates = temp.length;
         outerThis.positions = temp;
@@ -61,6 +67,14 @@ export class DashboardPageComponent implements OnInit {
     xhr2.send();
 
     // End of Get position templates
+  }
+
+  updateSearchTerm(value: any){
+    this.mainSearchTerm = value.target.value;
+  }
+
+  mainSearch(){
+    this.router.navigate(['portal','dashboard','view-cvs'], { queryParams: { searchTerm: this.mainSearchTerm } });
   }
 
 }

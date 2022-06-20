@@ -30,7 +30,7 @@
       </div>
     </div>
     <div nz-col [nzSpan]="6" class="viewBtn">
-      <button nz-button nzType="primary" [routerLink]="['view-cvs']">View</button>
+      <button nz-button nzType="primary" [routerLink]="['view-cvs']" [queryParams]="{skills: skills, education: education, experience: experience}">View</button>
     </div>
   </div>
 

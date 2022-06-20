@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import { Router } from '@angular/router';
 import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
 import {NzNotificationService} from "ng-zorro-antd/notification";
+// import { FormGroup } from '@angular/forms';
 
 // interface CV {
 //   firstName: string;
@@ -21,6 +22,8 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
 })
 export class ViewCvsComponent implements OnInit {
   small: NzSizeDSType = 'small';
+  // validateForm!: FormGroup;
+  searchValue: string = "";
 
   cvs: any[] = [
     {
@@ -30,15 +33,66 @@ export class ViewCvsComponent implements OnInit {
       email: "",
       phoneNumber: "",
       pdfURL: "",
-      skills: []
+      skills: [],
+      showing: true
     }
   ];
 
+  skillsList: string[] = [
+    "Loading..."
+  ];
+
+  educationList: string[] = [
+    'B.Eng', 'BEng' ,'B.Eng Electrical', 'B.Eng Electronic', 'B.Eng Computer', 'BEng Electrical', 'BEng Electronic', 'BEng Computer',
+    'BSc Computer Science', 'B.Sc Computer Science', 'BCom Informatics', 'B.Com Informatics', 'BIS',
+    'B Information Systems', 'BIT', 'B Information Technology', 'Multimedia', 'BSc', 'B.Sc', 'BSc Information and Knowledge Systems', 'B.Sc Information and Knowledge Systems'
+  ];
+
+  experienceList: string[] = [
+    "Data Analyst", "Data Scientist", "Data Engineer"
+  ];
+
+  listOfSelectedValue = [];
+  listOfSelectedEducation = [];
+  listOfSelectedExperience = [];
+
   constructor(private http:HttpClient, private router: Router, private notification: NzNotificationService) {
     this.getCVData();
+
+    var url = API_ENDPOINTS.getSkillsList;
+    console.log("Loaded Page");
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    var outerThis = this;
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        let temp = JSON.parse(xhr.responseText)["Items"].map((item: { id: any; skill: any; }) => {
+          return {
+            id: item.id.S,
+            skill: item.skill.S
+          }
+        });
+        temp = temp.sort((a: any, b: any) => {
+          return b.skill.toLowerCase() < a.skill.toLowerCase() ? 1 : -1;
+        });
+        outerThis.skillsList = temp.map((item: { id: any; skill: any; }) => {
+          return item.skill;
+        });
+      }
+    }
+    xhr.send();
   }
 
   ngOnInit(): void {
+    const routeParams = this.router.parseUrl(this.router.url).queryParams;
+    if(routeParams["searchTerm"] != null){
+      this.searchValue = routeParams["searchTerm"] || "";
+    }
+    if(this.listOfSelectedValue != null){
+      this.listOfSelectedValue = routeParams["skills"].split(", ") || [];
+      this.listOfSelectedEducation = routeParams["education"].split(", ") || [];
+      this.listOfSelectedExperience = routeParams["experience"].split(", ") || [];
+    }
   }
 
   reloadPage() {
@@ -62,9 +116,13 @@ export class ViewCvsComponent implements OnInit {
               email: item.email.S,
               phoneNumber: item.phoneNumber.S,
               uuid: item.uuid.S,
-              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+item.uuid.S+".pdf",
+              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+item.uuid.S,
               skills: ["Loading..."],
-              hasSkills: false
+              education: ["Loading..."],
+              experience: ["Loading..."],
+              hasSkills: false,
+              searchShowing: true,
+              filterShowing: true
             }
           });
           outerThis.cvs = temp;
@@ -76,28 +134,46 @@ export class ViewCvsComponent implements OnInit {
           xhr2.open("GET", url2);
           xhr2.onreadystatechange = function () {
             if (xhr2.readyState === 4) {
-                let temp2 = JSON.parse(xhr2.responseText)["Items"].map((item: { cv_id: any; skills: any; }) => {
+                let temp2 = JSON.parse(xhr2.responseText)["Items"].map((item: { cv_id: any; applicant_id: any; education: any; experience: any; skills: any; }) => {
                   return {
-                    id: item.cv_id.S,
+                    cv_id: item.cv_id.S,
+                    applicant_id: item.applicant_id.S,
+                    education: item.education.S,
+                    experience: item.experience.S,
                     skills: item.skills.S
                   }
                 });
 
                 outerThis.cvs.forEach(cv => {
                   let found = false;
-                  temp2.forEach((skill: { id: any; skills: string; }) => {
-                    if (cv.uuid === skill.id) {
+                  temp2.forEach((skill: { cv_id: string; applicant_id: string; education: string; experience: string; skills: string }) => {
+                    console.log("checking")
+                    if (cv.uuid === skill.applicant_id) {
                       cv.skills = skill.skills.split(",");
+                      cv.education = skill.education.split(",");
+                      cv.experience = skill.experience.split(",");
                       cv.hasSkills = true;
                       found = true;
+                      console.log("Found");
                     }
                   });
                   if(!found){
-                    cv.skills = ["Processing skills..."]
+                    cv.skills = ["No skills found"]
                   }
                 });
 
-                console.log(outerThis.cvs);
+                outerThis.cvs.forEach(cv => {
+                  if(cv.firstName.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
+                  cv.surname.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
+                  cv.id.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
+                  cv.email.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
+                  cv.phoneNumber.toLowerCase().includes(outerThis.searchValue.toLowerCase())){
+                    cv.showing = true;
+                  }else{
+                    cv.showing = false;
+                  }
+                });
+                outerThis.skillFilter();
             }};
 
           xhr2.send();
@@ -115,7 +191,9 @@ export class ViewCvsComponent implements OnInit {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if(xhr.status === 200){
-          window.open(url, '_blank');
+          // Content-Type: application/pdf
+          // Content-Disposition: inline; filename="filename.pdf"
+          outerThis.router.navigate(['portal','dashboard','view-pdf'], { queryParams: { pdfSrc: url } });
         }else{
           outerThis.notification.create(
             'error',
@@ -129,5 +207,47 @@ export class ViewCvsComponent implements OnInit {
     xhr.send();
 
     // window.open(url, '_blank');
+  }
+
+  search(value: any) {
+    this.searchValue = value.target.value;
+    this.cvs.forEach(cv => {
+      if(cv.firstName.toLowerCase().includes(value.target.value.toLowerCase()) ||
+      cv.surname.toLowerCase().includes(value.target.value.toLowerCase()) ||
+      cv.id.toLowerCase().includes(value.target.value.toLowerCase()) ||
+      cv.email.toLowerCase().includes(value.target.value.toLowerCase()) ||
+      cv.phoneNumber.toLowerCase().includes(value.target.value.toLowerCase())){
+        cv.searchShowing = true;
+      }else{
+        cv.searchShowing = false;
+      }
+    });
+  }
+
+  skillFilter() {
+    this.cvs.forEach(cv => {
+      let hasSkills = true;
+      let hasEducation = true;
+      let hasExperience = true;
+      for(let i = 0; i < this.listOfSelectedValue.length; i++){
+        if(!cv.skills.includes(this.listOfSelectedValue[i])){
+          hasSkills = false;
+        }
+      }
+      for(let i = 0; i < this.listOfSelectedEducation.length; i++){
+        if(!cv.education.includes(this.listOfSelectedEducation[i])){
+          hasEducation = false;
+        }
+      }
+      for(let i = 0; i < this.listOfSelectedExperience.length; i++){
+        if(!cv.experience.includes(this.listOfSelectedExperience[i])){
+          hasExperience = false;
+        }
+      }
+      cv.filterShowing = hasSkills && hasEducation && hasExperience;
+    });
+    console.log(this.listOfSelectedValue);
+    console.log(this.listOfSelectedEducation);
+    console.log(this.listOfSelectedExperience);
   }
 }

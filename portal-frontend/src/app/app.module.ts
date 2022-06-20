@@ -10,6 +10,7 @@ import en from '@angular/common/locales/en';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {AuthenticatedUserGuard} from "./shared/guards/authenticated-user.guard";
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 registerLocaleData(en);
 
@@ -22,6 +23,7 @@ registerLocaleData(en);
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    PdfViewerModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }, AuthenticatedUserGuard],
   bootstrap: [AppComponent]

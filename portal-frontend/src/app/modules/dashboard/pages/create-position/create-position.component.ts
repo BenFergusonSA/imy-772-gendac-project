@@ -13,34 +13,38 @@ import {Router} from "@angular/router";
 export class CreatePositionComponent implements OnInit {
   validateForm!: FormGroup;
 
+  // https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/PositionTemplates/skilllist
+
   skillsList: string[] = [
-    "Angular",
-    "React",
-    "Vue",
-    "Node",
-    "JavaScript",
-    "TypeScript",
-    "HTML",
-    "CSS",
-    "C#",
-    "C++",
-    "Python",
-    "PHP",
-    "Ruby",
-    "Swift",
-    "Go",
-    "Kotlin",
-    "Dart",
-    "Rust",
-    "Scala",
-    "Objective-C",
-    "C",
-    "C++"
+    "Loading..."
   ];
 
   listOfSelectedValue = [];
 
-  constructor(private fb: FormBuilder,private httpClient: HttpClient, private router: Router) { }
+  constructor(private fb: FormBuilder,private httpClient: HttpClient, private router: Router) {
+    var url = API_ENDPOINTS.getSkillsList;
+    console.log("Loaded Page");
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    var outerThis = this;
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        let temp = JSON.parse(xhr.responseText)["Items"].map((item: { id: any; skill: any; }) => {
+          return {
+            id: item.id.S,
+            skill: item.skill.S
+          }
+        });
+        temp = temp.sort((a: any, b: any) => {
+          return b.skill.toLowerCase() < a.skill.toLowerCase() ? 1 : -1;
+        });
+        outerThis.skillsList = temp.map((item: { id: any; skill: any; }) => {
+          return item.skill;
+        });
+      }
+    }
+    xhr.send();
+   }
 
   submitForm(): void {
     if (this.validateForm.valid) {
