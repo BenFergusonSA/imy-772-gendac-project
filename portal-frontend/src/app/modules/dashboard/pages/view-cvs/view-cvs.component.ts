@@ -196,7 +196,10 @@ export class ViewCvsComponent implements OnInit {
               filterShowing: true
             }
           });
-          outerThis.cvs = temp;
+
+          outerThis.cvs = temp.sort((a: any, b: any) => {
+            return b.firstName.toLowerCase() < a.firstName.toLowerCase() ? 1 : -1;
+          });
 
           // Get Skills
           var url2 = API_ENDPOINTS.getSkills;

@@ -8,7 +8,26 @@ h3 {
 
 nz-card {
   background-color: rgb(167,170,172);
-  border-color: rgb(52,58,64);
+  border-color: white;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.pdfCard {
+  background-color: #1890ff;
+  border: none;
+  text-align: center;
+  color: white;
+}
+
+.pdfCard .card-title h3 {
+  color: white;
+  transition: 0.3s;
+}
+
+.pdfCard:hover {
+  cursor: pointer;
+  border: solid white 1px;
 }
 
 .dataValue {
@@ -19,18 +38,30 @@ nz-card {
 
 .skillCard .card-title, .educationCard .card-title, .experienceCard .card-title {
   text-align: center;
+  color:white;
 }
 
-// .skillCard {
-//   padding: 5px !important;
-// }
+.skillCard, .educationCard, .experienceCard {
+  background-color: rgb(52,58,64);
+}
 
-nz-card {
-  margin-bottom: 10px;
+nz-collapse {
+  border-radius: 10px;
+}
+
+nz-collapse-panel {
+  border-radius: 10px;
+  border:solid white 1px;
 }
 
 nz-collapse-panel {
   background-color: rgb(167,170,172);
+  margin-bottom: 5px;
+}
+
+.ant-collapse-header {
+  color: white;
+  font-weight: bold;
 }
 
 .reloadIcon:hover {
