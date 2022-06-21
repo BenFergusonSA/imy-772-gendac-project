@@ -4,9 +4,11 @@ import axios from "axios";
 import {downloadFile} from './services/s3'
 import {parseCV, readParsedResults} from './services/cv-parser'
 import {deleteTempFiles} from './services/file-helper'
+import cors from 'cors';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3200;
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
