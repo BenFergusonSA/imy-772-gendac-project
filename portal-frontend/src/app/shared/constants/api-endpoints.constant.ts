@@ -5,5 +5,6 @@ export const API_ENDPOINTS = {
   posTemplates: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates',
   skillsList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/skilllist',
   educationList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/educationlist',
-  experienceList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/experiencelist'
+  experienceList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/experiencelist',
+  getSkillFilter: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/applicants',
 }

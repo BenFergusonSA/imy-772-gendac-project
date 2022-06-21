@@ -23,10 +23,15 @@
                   [(ngModel)]="listOfSelectedValue"
                   id="skills"
                   formControlName="skills"
+                  [nzNotFoundContent]="addNewSkill"
+                  (input)="typeSkill($event)"
                 >
                   <nz-option *ngFor="let skill of skillsList" [nzLabel]="skill" [nzValue]="skill"></nz-option>
                 </nz-select>
                 <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+                <ng-template #addNewSkill>
+                  <button nz-button nzType="primary" (click)="addSkill()" style="width:100%;white-space: normal; height:fit-content">Add {{typedSkillValue}} to skills</button>
+                </ng-template>
               </nz-form-control>
             </nz-form-item>
             <nz-form-item nz-row class="create-area">

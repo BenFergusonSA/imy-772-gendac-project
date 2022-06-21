@@ -15,11 +15,36 @@ export class CreatePositionComponent implements OnInit {
 
   // https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/PositionTemplates/skilllist
 
+  addSkill(){
+    this.skillsList.push(this.typedSkillValue);
+
+    let skill_id = uuid.v4();
+    let jsonObj = {
+      "id": skill_id,
+      "skill": this.typedSkillValue
+    }
+
+    this.httpClient.post(API_ENDPOINTS.skillsList, jsonObj).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => { console.log(err) },
+
+    });
+  }
+
   skillsList: string[] = [
     "Loading..."
   ];
 
+  typedSkillValue: string = "";
+
   listOfSelectedValue = [];
+
+  typeSkill(value: any){
+    this.typedSkillValue = value.target.value;
+    console.log(this.typedSkillValue);
+  }
 
   constructor(private fb: FormBuilder,private httpClient: HttpClient, private router: Router) {
     var url = API_ENDPOINTS.skillsList;

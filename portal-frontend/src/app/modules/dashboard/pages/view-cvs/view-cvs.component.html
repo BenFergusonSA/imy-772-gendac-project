@@ -8,7 +8,7 @@
       <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
     </ng-template>
   </div>
-  <div nz-col [nzSpan]="6">
+  <div nz-col [nzSpan]="5">
 
       <nz-form-item>
         <nz-form-label [nzSpan]="12" nzFor="skills">Skills</nz-form-label>
@@ -20,16 +20,21 @@
             nzPlaceHolder="Please select"
             [(ngModel)]="listOfSelectedValue"
             id="skills"
-            (ngModelChange)="filter()"
+            (ngModelChange)="skillFilter()"
+            [nzNotFoundContent]="addNewSkill"
+            (input)="typeSkill($event)"
           >
             <nz-option *ngFor="let skill of skillsList" [nzLabel]="skill" [nzValue]="skill"></nz-option>
           </nz-select>
           <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+          <ng-template #addNewSkill>
+            <button nz-button nzType="primary" (click)="addSkill()" style="width:100%;white-space: normal; height:fit-content">Add {{typedSkillValue}} to skills</button>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
   </div>
-  <div nz-col [nzSpan]="6">
+  <div nz-col [nzSpan]="5">
 
       <nz-form-item>
         <nz-form-label [nzSpan]="12" nzFor="education">Education</nz-form-label>
@@ -40,7 +45,7 @@
             nzMode="multiple"
             nzPlaceHolder="Please select"
             [(ngModel)]="listOfSelectedEducation"
-            id="skills"
+            id="education"
             (ngModelChange)="filter()"
           >
             <nz-option *ngFor="let education of educationList" [nzLabel]="education" [nzValue]="education"></nz-option>
@@ -50,27 +55,31 @@
       </nz-form-item>
 
   </div>
-  <div nz-col [nzSpan]="6">
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="12" nzFor="experience">Experience</nz-form-label>
-        <nz-form-control [nzSpan]="12" >
-          <nz-select
-            [nzMaxTagCount]="3"
-            [nzMaxTagPlaceholder]="tagPlaceHolder"
-            nzMode="multiple"
-            nzPlaceHolder="Please select"
-            [(ngModel)]="listOfSelectedExperience"
-            id="skills"
-            (ngModelChange)="filter()"
-          >
-            <nz-option *ngFor="let experience of experienceList" [nzLabel]="experience" [nzValue]="experience"></nz-option>
-          </nz-select>
-          <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
-
+  <div nz-col [nzSpan]="5">
+    <nz-form-item>
+      <nz-form-label [nzSpan]="12" nzFor="experience">Experience</nz-form-label>
+      <nz-form-control [nzSpan]="12" >
+        <nz-select
+          [nzMaxTagCount]="3"
+          [nzMaxTagPlaceholder]="tagPlaceHolder"
+          nzMode="multiple"
+          nzPlaceHolder="Please select"
+          [(ngModel)]="listOfSelectedExperience"
+          id="experience"
+          (ngModelChange)="filter()"
+        >
+          <nz-option *ngFor="let experience of experienceList" [nzLabel]="experience" [nzValue]="experience"></nz-option>
+        </nz-select>
+        <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col [nzSpan]="3">
+    <p style="text-align:center;">
+      Filter Accuracy:
+      <nz-slider [(ngModel)]="filterAccuracy" [nzTipFormatter]="accFormatter" [nzStep]="5" [nzMin]="30" [nzMax]="95" (ngModelChange)="skillFilter()"></nz-slider>
+    </p>
+  </div>
 </div>
 
 
@@ -132,9 +141,9 @@
               <div class="card-title">
                 <h3>Education</h3>
                 <div nz-row [nzGutter]="24">
-                  <div  *ngFor="let education of cv.education" nz-col [nzSpan]="12" class="education">
+                  <div nz-col [nzSpan]="12" class="education">
                     <nz-card [nzSize]="small" class="educationCard">
-                      <div class="card-title">{{education}}</div>
+                      <div class="card-title">{{cv.education}}</div>
                     </nz-card>
                   </div>
                 </div>
@@ -146,9 +155,9 @@
               <div class="card-title">
                 <h3>Experience</h3>
                 <div nz-row [nzGutter]="24">
-                  <div  *ngFor="let experience of cv.experience" nz-col [nzSpan]="12" class="experience">
+                  <div nz-col [nzSpan]="12" class="experience">
                     <nz-card [nzSize]="small" class="experienceCard">
-                      <div class="card-title">{{experience}}</div>
+                      <div class="card-title">{{cv.experience}}</div>
                     </nz-card>
                   </div>
                 </div>
