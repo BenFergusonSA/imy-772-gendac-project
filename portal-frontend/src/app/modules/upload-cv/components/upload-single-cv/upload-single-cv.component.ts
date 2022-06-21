@@ -4,6 +4,7 @@ import {NzUploadFile} from "ng-zorro-antd/upload";
 import {LoaderStateModel} from "../../../../shared/models/loader-state.model";
 import {UploadCvService} from "../../services/upload-cv.service";
 import {NzNotificationService} from "ng-zorro-antd/notification";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-upload-single-cv',
@@ -15,7 +16,7 @@ export class UploadSingleCvComponent implements OnInit {
   uploadCvForm!: FormGroup;
   uploadState: LoaderStateModel = new LoaderStateModel();
 
-  constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService) {
+  constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -41,6 +42,8 @@ export class UploadSingleCvComponent implements OnInit {
     this.uploadState.startLoader();
 
     try {
+      const formDetails = this.uploadCvForm.getRawValue();
+
       await this.uploadCvService.uploadSingleCv(this.fileList[0], formDetails).then(() => {
         this.uploadState.onSuccess();
         this.notification.create(
