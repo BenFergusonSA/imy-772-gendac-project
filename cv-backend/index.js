@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/process-cv', async (req, res) => {
-    const {applicantId, applicantCVUUID} = req.body;
+    const {applicantCVUUID} = req.body;
     const uploadedCVFilename = 'public/' + applicantCVUUID + '.pdf';
     console.log('Uploaded CV file to download', uploadedCVFilename);
 
@@ -57,9 +57,8 @@ app.post('/process-cv', async (req, res) => {
 
     //Make request to lambda function with results
     await axios.post('https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/staging/upload-parsed-skills', {
-        "uuid": applicantCVUUID,
+        "applicantUUID": applicantCVUUID,
         "skills": parsedResults.data.skills,
-        "applicant_id": applicantId
     });
 
     console.log('Made request to lambda');
