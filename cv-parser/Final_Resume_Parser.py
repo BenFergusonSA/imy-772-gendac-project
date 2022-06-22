@@ -61,6 +61,7 @@ results = {
     "education": applicantEdu
 }
 resultData = json.dumps(results)
+print(resultData)
 f = open("../cv-backend/storage/results.json", "w")
 f.write(resultData)
 f.close()
