@@ -11,7 +11,7 @@ const parseCV = async () => {
         console.debug('Running python script');
 
         const __dirname = path.resolve();
-        const scriptPath = path.join(__dirname, '..', 'cv-parser', 'test.py');
+        const scriptPath = path.join(__dirname, '..', 'cv-parser', 'Final_Resume_Parser.py');
         const cvParser = spawn('python3', [scriptPath]);
 
         return new Promise((resolve) => {
