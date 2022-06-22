@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { input } from 'aws-amplify';
+import { NzSizeDSType } from 'ng-zorro-antd/core/types/size';
 
 @Component({
   selector: 'app-basic-card',
@@ -11,9 +13,13 @@ export class BasicCardComponent implements OnInit {
   @Input() education = [];
   @Input() experience = [];
   @Input() matches = 0;
+  @Input() template_id = '';
+
+  small: NzSizeDSType = 'small';
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

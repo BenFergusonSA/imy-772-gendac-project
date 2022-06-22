@@ -4,7 +4,7 @@
       <div nz-col [nzSpan]="18" class="main">
         <div nz-row [nzGutter]="[24,24]">
           <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="8" class="gutter-row" *ngFor="let position of positions">
-            <app-basic-card [name]=position.name [skills]=position.skills [education]=position.education [experience]=position.experience [matches]=position.matches></app-basic-card>
+            <app-basic-card [name]=position.name [skills]=position.skills [education]=position.education [experience]=position.experience [matches]=position.matches [template_id]=position.template_id></app-basic-card>
           </div>
         </div>
 
@@ -14,7 +14,7 @@
         <form nz-form>
           <nz-form-item>
             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-              <input type="text" nz-input placeholder="Search" (input)="updateSearchTerm($event)" />
+              <input type="text" nz-input placeholder="CV Search" (input)="updateSearchTerm($event)" />
             </nz-input-group>
             <ng-template #suffixIconButton>
               <button nz-button nzType="primary" nzSearch (click)="mainSearch()"><i nz-icon nzType="search"></i></button>

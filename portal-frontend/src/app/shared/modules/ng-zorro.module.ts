@@ -16,6 +16,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 @NgModule({
   exports: [
@@ -34,7 +36,9 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
     NzCollapseModule,
     NzToolTipModule,
     NzSelectModule,
-    NzSliderModule
+    NzSliderModule,
+    NzSpinModule,
+    NzListModule
   ]
 })
 export class NgZorroModule { }

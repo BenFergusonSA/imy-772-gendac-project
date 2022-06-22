@@ -1,6 +1,6 @@
 <h1>All CVs</h1>
-<div nz-row>
-  <div nz-col [nzSpan]="6">
+<div nz-row nzJustify="center">
+  <div nz-col [nzSpan]="5">
     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
       <input type="text" nz-input placeholder="input search text" (input)="search($event)" value="{{searchValue}}"/>
     </nz-input-group>
@@ -8,10 +8,10 @@
       <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
     </ng-template>
   </div>
-  <div nz-col [nzSpan]="5">
+  <div nz-col [nzSpan]="6">
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="12" nzFor="skills">Skills</nz-form-label>
+        <nz-form-label [nzSpan]="12" nzFor="skills">Skills&nbsp; <span class="infoMsg">(has all of)</span></nz-form-label>
         <nz-form-control [nzSpan]="12" >
           <nz-select
             [nzMaxTagCount]="3"
@@ -20,7 +20,7 @@
             nzPlaceHolder="Please select"
             [(ngModel)]="listOfSelectedValue"
             id="skills"
-            (ngModelChange)="skillFilter()"
+            (ngModelChange)="filter()"
             [nzNotFoundContent]="addNewSkill"
             (input)="typeSkill($event)"
           >
@@ -34,10 +34,10 @@
       </nz-form-item>
 
   </div>
-  <div nz-col [nzSpan]="5">
+  <div nz-col [nzSpan]="6">
 
       <nz-form-item>
-        <nz-form-label [nzSpan]="12" nzFor="education">Education</nz-form-label>
+        <nz-form-label [nzSpan]="12" nzFor="education">Education&nbsp; <span class="infoMsg">(has any of)</span></nz-form-label>
         <nz-form-control [nzSpan]="12" >
           <nz-select
             [nzMaxTagCount]="3"
@@ -47,38 +47,29 @@
             [(ngModel)]="listOfSelectedEducation"
             id="education"
             (ngModelChange)="filter()"
+            [nzNotFoundContent]="addNewEducation"
+            (input)="typeEducation($event)"
           >
             <nz-option *ngFor="let education of educationList" [nzLabel]="education" [nzValue]="education"></nz-option>
           </nz-select>
           <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
+          <ng-template #addNewEducation>
+            <button nz-button nzType="primary" (click)="addEducation()" style="width:100%;white-space: normal; height:fit-content">Add {{typedEducationValue}} to education</button>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
 
   </div>
-  <div nz-col [nzSpan]="5">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="12" nzFor="experience">Experience</nz-form-label>
-      <nz-form-control [nzSpan]="12" >
-        <nz-select
-          [nzMaxTagCount]="3"
-          [nzMaxTagPlaceholder]="tagPlaceHolder"
-          nzMode="multiple"
-          nzPlaceHolder="Please select"
-          [(ngModel)]="listOfSelectedExperience"
-          id="experience"
-          (ngModelChange)="filter()"
-        >
-          <nz-option *ngFor="let experience of experienceList" [nzLabel]="experience" [nzValue]="experience"></nz-option>
-        </nz-select>
-        <ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
-      </nz-form-control>
-    </nz-form-item>
-  </div>
+  <div nz-col [nzSpan]="1"></div>
   <div nz-col [nzSpan]="3">
     <p style="text-align:center;">
       Filter Accuracy:
-      <nz-slider [(ngModel)]="filterAccuracy" [nzTipFormatter]="accFormatter" [nzStep]="5" [nzMin]="30" [nzMax]="95" (ngModelChange)="skillFilter()"></nz-slider>
+      <nz-slider [(ngModel)]="filterAccuracy" [nzTipFormatter]="accFormatter" [nzStep]="5" [nzMin]="30" [nzMax]="95" (ngModelChange)="filter()"></nz-slider>
     </p>
+  </div>
+  <div nz-col [nzSpan]="1"></div>
+  <div nz-col [nzSpan]="2">
+    <button (click)="resetFilters()" nz-button nzType="default" [nzSize]="sizeS" class="resetFilters">Clear Filters</button>
   </div>
 </div>
 
@@ -87,6 +78,7 @@
 
 
 <nz-collapse nzGhost>
+  <nz-spin [nzSpinning]="isLoading" nzSimple></nz-spin>
   <ng-container *ngFor="let cv of cvs">
     <nz-collapse-panel
       *ngIf="cv.searchShowing && cv.filterShowing"
@@ -122,10 +114,10 @@
               </div>
             </nz-card>
           </div>
-          <div nz-col [nzSpan]="8" class="main">
+          <div nz-col [nzSpan]="12" class="main">
             <nz-card>
               <div class="card-title">
-                <h3>Skills <span [hidden]="cv.hasSkills" nz-tooltip nzTooltipTitle="Refresh Page"><i nz-icon nzType='reload' nzTheme='outline' (click)="reloadPage()" class="reloadIcon"></i></span></h3>
+                <h3>Skills</h3>
                 <div nz-row [nzGutter]="24">
                   <div  *ngFor="let skill of cv.skills" nz-col [nzSpan]="8" class="skills">
                     <nz-card [nzSize]="small" class="skillCard">
@@ -136,21 +128,21 @@
               </div>
             </nz-card>
           </div>
-          <div nz-col [nzSpan]="8" class="main">
+          <div nz-col [nzSpan]="12" class="main">
             <nz-card>
               <div class="card-title">
                 <h3>Education</h3>
                 <div nz-row [nzGutter]="24">
-                  <div nz-col [nzSpan]="12" class="education">
+                  <div  *ngFor="let education of cv.education" nz-col [nzSpan]="8" class="education">
                     <nz-card [nzSize]="small" class="educationCard">
-                      <div class="card-title">{{cv.education}}</div>
+                      <div class="card-title">{{education}}</div>
                     </nz-card>
                   </div>
                 </div>
               </div>
             </nz-card>
           </div>
-          <div nz-col [nzSpan]="8" class="main">
+          <!-- <div nz-col [nzSpan]="8" class="main">
             <nz-card>
               <div class="card-title">
                 <h3>Experience</h3>
@@ -163,9 +155,12 @@
                 </div>
               </div>
             </nz-card>
-          </div>
+          </div> -->
         </div>
       </div>
     </nz-collapse-panel>
+  </ng-container>
+  <ng-container *ngIf="cvs.length == 0">
+    <p class="infoMsg" style="text-align:center;">No results found</p>
   </ng-container>
 </nz-collapse>

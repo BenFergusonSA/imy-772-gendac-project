@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { API_ENDPOINTS } from 'src/app/shared/constants/api-endpoints.constant';
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import * as uuid from "uuid";
+import { NzButtonSize } from 'ng-zorro-antd/button';
 // import { FormGroup } from '@angular/forms';
 
 // interface CV {
@@ -22,6 +23,9 @@ import * as uuid from "uuid";
   styleUrls: ['./view-cvs.component.less']
 })
 export class ViewCvsComponent implements OnInit {
+  sizeL: NzButtonSize = 'large';
+  sizeS: NzButtonSize = 'small';
+
   addSkill(){
     this.skillsList.push(this.typedSkillValue);
 
@@ -40,10 +44,31 @@ export class ViewCvsComponent implements OnInit {
     });
   }
 
+  addEducation(){
+    this.educationList.push(this.typedEducationValue);
+
+    let skill_id = uuid.v4();
+    let jsonObj = {
+      "id": skill_id,
+      "education": this.typedSkillValue
+    }
+
+    this.httpClient.post(API_ENDPOINTS.educationList, jsonObj).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => { console.log(err) },
+
+    });
+  }
+
   small: NzSizeDSType = 'small';
   // validateForm!: FormGroup;
   searchValue: string = "";
   typedSkillValue: string = "";
+  typedEducationValue: string = "";
+
+  isLoading: boolean = true;
 
   cvs: any[] = [
     {
@@ -54,6 +79,25 @@ export class ViewCvsComponent implements OnInit {
       phoneNumber: "",
       pdfURL: "",
       skills: [],
+      education: [],
+      showing: true
+    }
+  ];
+
+  allCVs: any[] = [
+
+  ]
+
+  tempCvs: any[] = [
+    {
+      firstName: 'Loading...',
+      surname: '',
+      id: "",
+      email: "",
+      phoneNumber: "",
+      pdfURL: "",
+      skills: [],
+      education: [],
       showing: true
     }
   ];
@@ -78,7 +122,10 @@ export class ViewCvsComponent implements OnInit {
 
   typeSkill(value: any){
     this.typedSkillValue = value.target.value;
-    console.log(this.typedSkillValue);
+  }
+
+  typeEducation(value: any){
+    this.typedEducationValue = value.target.value;
   }
 
   listOfSelectedValue = [];
@@ -102,21 +149,9 @@ export class ViewCvsComponent implements OnInit {
 
       // });
     // }
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    this.getCVData();
-
+  ngOnInit(): void {
     var url = API_ENDPOINTS.skillsList;
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
@@ -135,70 +170,72 @@ export class ViewCvsComponent implements OnInit {
         outerThis.skillsList = temp.map((item: { id: any; skill: any; }) => {
           return item.skill;
         });
+
+        var url2 = API_ENDPOINTS.educationList;
+        var xhr2 = new XMLHttpRequest();
+        xhr2.open("GET", url2);
+        xhr2.onreadystatechange = function () {
+          if (xhr2.readyState === 4) {
+            let temp2 = JSON.parse(xhr2.responseText)["Items"].map((item: { education_id: any; education: any; }) => {
+              return {
+                id: item.education_id.S,
+                education: item.education.S
+              }
+            });
+            temp2 = temp2.sort((a: any, b: any) => {
+              return b.education.toLowerCase() < a.education.toLowerCase() ? 1 : -1;
+            });
+            outerThis.educationList = temp2.map((item: { id: any; education: any; }) => {
+              return item.education;
+            });
+
+            const routeParams = outerThis.router.parseUrl(outerThis.router.url).queryParams;
+            if(routeParams["searchTerm"] != null){
+              outerThis.searchValue = routeParams["searchTerm"] || "";
+            }
+            if(routeParams["skills"] != null){
+              let tmpSkills = [];
+              if(typeof(routeParams["skills"]) == "string"){
+                tmpSkills.push(routeParams["skills"]);
+              }else{
+                tmpSkills = routeParams["skills"];
+              }
+                outerThis.listOfSelectedValue = tmpSkills;
+            }
+            if(routeParams["education"] != null){
+              let tmpEdu = [];
+              if(typeof(routeParams["education"]) == "string"){
+                tmpEdu.push(routeParams["education"]);
+              }else{
+                tmpEdu = routeParams["education"];
+              }
+              outerThis.listOfSelectedEducation = tmpEdu;
+            }
+
+            console.log(routeParams);
+
+            outerThis.getCVData();
+          }
+        }
+        xhr2.send();
       }
     }
     xhr.send();
-
-    var url2 = API_ENDPOINTS.educationList;
-    var xhr2 = new XMLHttpRequest();
-    xhr2.open("GET", url2);
-    xhr2.onreadystatechange = function () {
-      if (xhr2.readyState === 4) {
-        let temp2 = JSON.parse(xhr2.responseText)["Items"].map((item: { education_id: any; education: any; }) => {
-          return {
-            id: item.education_id.S,
-            education: item.education.S
-          }
-        });
-        temp2 = temp2.sort((a: any, b: any) => {
-          return b.education.toLowerCase() < a.education.toLowerCase() ? 1 : -1;
-        });
-        outerThis.educationList = temp2.map((item: { id: any; education: any; }) => {
-          return item.education;
-        });
-      }
-    }
-    xhr2.send();
-
-    var url3 = API_ENDPOINTS.experienceList;
-    var xhr3 = new XMLHttpRequest();
-    xhr3.open("GET", url3);
-    xhr3.onreadystatechange = function () {
-      if (xhr3.readyState === 4) {
-        let temp3 = JSON.parse(xhr3.responseText)["Items"].map((item: { experience_id: any; experience: any; }) => {
-          return {
-            id: item.experience_id.S,
-            experience: item.experience.S
-          }
-        });
-        temp3 = temp3.sort((a: any, b: any) => {
-          return b.experience.toLowerCase() < a.experience.toLowerCase() ? 1 : -1;
-        });
-        outerThis.experienceList = temp3.map((item: { id: any; experience: any; }) => {
-          return item.experience;
-        });
-      }
-    }
-    xhr3.send();
   }
 
-  ngOnInit(): void {
-    const routeParams = this.router.parseUrl(this.router.url).queryParams;
-    if(routeParams["searchTerm"] != null){
-      this.searchValue = routeParams["searchTerm"] || "";
-    }
-    if(this.listOfSelectedValue != null){
-      this.listOfSelectedValue = routeParams["skills"].split(", ") || [];
-      this.listOfSelectedEducation = routeParams["education"].split(", ") || [];
-      this.listOfSelectedExperience = routeParams["experience"].split(", ") || [];
-    }
-  }
-
-  reloadPage() {
-    this.getCVData();
+  resetFilters() {
+    this.listOfSelectedValue = [];
+    this.listOfSelectedEducation = [];
+    this.listOfSelectedExperience = [];
+    this.searchValue = "";
+    this.typedSkillValue = "";
+    this.typedEducationValue = "";
+    this.filterAccuracy = 65;
+    this.filter();
   }
 
   getCVData(){
+    this.isLoading = true;
     // Get Applicants
     var url = API_ENDPOINTS.getApplicants;
 
@@ -217,7 +254,7 @@ export class ViewCvsComponent implements OnInit {
               uuid: item.uuid.S,
               pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+item.uuid.S,
               skills: ["Loading..."],
-              education: "Loading...",
+              education: ["Loading..."],
               experience: "Loading...",
               hasSkills: false,
               searchShowing: true,
@@ -225,7 +262,7 @@ export class ViewCvsComponent implements OnInit {
             }
           });
 
-          outerThis.cvs = temp.sort((a: any, b: any) => {
+          temp = temp.sort((a: any, b: any) => {
             return b.firstName.toLowerCase() < a.firstName.toLowerCase() ? 1 : -1;
           });
 
@@ -241,15 +278,15 @@ export class ViewCvsComponent implements OnInit {
                   return {
                     cv_id: item.cv_id.S,
                     applicant_id: item.applicant_id.S,
-                    education: item.education.S,
+                    education: item.education.SS,
                     experience: item.experience.S,
                     skills: item.skills.SS
                   }
                 });
 
-                outerThis.cvs.forEach(cv => {
+                temp.forEach((cv: any) => {
                   let found = false;
-                  temp2.forEach((skill: { cv_id: string; applicant_id: string; education: string; experience: string; skills: string[] }) => {
+                  temp2.forEach((skill: { cv_id: string; applicant_id: string; education: string[]; experience: string; skills: string[] }) => {
                     console.log("checking")
                     if (cv.uuid === skill.applicant_id) {
                       cv.skills = skill.skills;
@@ -264,20 +301,7 @@ export class ViewCvsComponent implements OnInit {
                     cv.skills = ["No skills found"]
                   }
                 });
-
-                console.log(outerThis.cvs);
-
-                outerThis.cvs.forEach(cv => {
-                  if(cv.firstName.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-                  cv.surname.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-                  cv.id.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-                  cv.email.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-                  cv.phoneNumber.toLowerCase().includes(outerThis.searchValue.toLowerCase())){
-                    cv.showing = true;
-                  }else{
-                    cv.showing = false;
-                  }
-                });
+                outerThis.allCVs = temp;
                 outerThis.filter();
             }};
 
@@ -329,9 +353,15 @@ export class ViewCvsComponent implements OnInit {
     });
   }
 
-  skillFilter(){
+  filter(){
+    console.log("Filtering...");
+    this.isLoading = true;
+    this.filterSkills(this.allCVs);
+  }
+
+  filterSkills(allApplicants: any){
     if(this.listOfSelectedValue.length == 0){
-      this.getCVData();
+      this.filterEducation(allApplicants);
     }else{
       var url = API_ENDPOINTS.getSkillFilter;
 
@@ -340,7 +370,7 @@ export class ViewCvsComponent implements OnInit {
       var outerThis = this;
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-          let temp = JSON.parse(xhr.responseText).map((applicant: any[]) => {
+          let filteredSkills = JSON.parse(xhr.responseText).map((applicant: any[]) => {
             return {
               firstName: applicant[0].Item.firstName.S,
               surname: applicant[0].Item.surname.S,
@@ -350,7 +380,7 @@ export class ViewCvsComponent implements OnInit {
               uuid: applicant[0].Item.uuid.S,
               pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+applicant[0].Item.uuid.S,
               skills: applicant[1].skills.SS,
-              education: applicant[1].education.S,
+              education: applicant[1].education.SS,
               experience: applicant[1].experience.S,
               hasSkills: true,
               searchShowing: true,
@@ -358,28 +388,17 @@ export class ViewCvsComponent implements OnInit {
             }
           });
 
-          outerThis.cvs = temp.sort((a: any, b: any) => {
+          filteredSkills = filteredSkills.sort((a: any, b: any) => {
             return b.firstName.toLowerCase() < a.firstName.toLowerCase() ? 1 : -1;
           });
-
-          outerThis.cvs.forEach(cv => {
-            if(cv.firstName.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-            cv.surname.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-            cv.id.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-            cv.email.toLowerCase().includes(outerThis.searchValue.toLowerCase()) ||
-            cv.phoneNumber.toLowerCase().includes(outerThis.searchValue.toLowerCase())){
-              cv.showing = true;
-            }else{
-              cv.showing = false;
-            }
-          });
-          outerThis.filter();
+          console.log("Done Skills");
+          outerThis.filterEducation(filteredSkills);
         }
       }
 
-      var data = `{
-        "skills": ${JSON.stringify(this.listOfSelectedValue)},
-        "accuracy": ${this.filterAccuracy/100}
+      let data = `{
+        "skills": ${JSON.stringify(outerThis.listOfSelectedValue)},
+        "accuracy": ${outerThis.filterAccuracy/100}
       }`;
 
       console.log(data);
@@ -388,30 +407,71 @@ export class ViewCvsComponent implements OnInit {
     }
   }
 
-  filter() {
-    this.cvs.forEach(cv => {
-      // let hasSkills = true;
-      let hasEducation = true;
-      let hasExperience = true;
-      // for(let i = 0; i < this.listOfSelectedValue.length; i++){
-      //   if(!cv.skills.includes(this.listOfSelectedValue[i])){
-      //     hasSkills = false;
-      //   }
-      // }
-      for(let i = 0; i < this.listOfSelectedEducation.length; i++){
-        if(!cv.education.includes(this.listOfSelectedEducation[i])){
-          hasEducation = false;
+  filterEducation(filteredSkills: any){
+    if(this.listOfSelectedEducation.length > 0){
+      var url2 = API_ENDPOINTS.getEducationFilter;
+      let outerThis = this;
+      var xhr2 = new XMLHttpRequest();
+      xhr2.open("POST", url2);
+      xhr2.onreadystatechange = function () {
+        if (xhr2.readyState === 4) {
+          let filteredEducation = JSON.parse(xhr2.responseText).map((applicant: any[]) => {
+            return {
+              firstName: applicant[0].Item.firstName.S,
+              surname: applicant[0].Item.surname.S,
+              id: applicant[0].Item.id.S,
+              email: applicant[0].Item.email.S,
+              phoneNumber: applicant[0].Item.phoneNumber.S,
+              uuid: applicant[0].Item.uuid.S,
+              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+applicant[0].Item.uuid.S,
+              skills: applicant[1].skills.SS,
+              education: applicant[1].education.SS,
+              experience: applicant[1].experience.S,
+              hasSkills: true,
+              searchShowing: true,
+              filterShowing: true
+            }
+          });
+
+          let filteredResult = filteredSkills.filter((applicant: any) => {
+            let present = false;
+            for(let i = 0; i < filteredEducation.length; i++){
+              if(filteredEducation[i].uuid == applicant.uuid){
+                present = true;
+                break;
+              }
+            }
+            return present;
+          });
+          outerThis.filterSearch(filteredResult);
         }
       }
-      for(let i = 0; i < this.listOfSelectedExperience.length; i++){
-        if(!cv.experience.includes(this.listOfSelectedExperience[i])){
-          hasExperience = false;
-        }
+
+      let data2 = `{
+        "education": ${JSON.stringify(outerThis.listOfSelectedEducation)},
+        "accuracy": ${outerThis.filterAccuracy/100}
+      }`;
+
+      xhr2.send(data2);
+    }else{
+      this.filterSearch(filteredSkills);
+    }
+  }
+
+  filterSearch(filteredResult: any){
+    filteredResult.forEach((cv: any) => {
+      if(cv.firstName.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+      cv.surname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+      cv.id.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+      cv.email.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+      cv.phoneNumber.toLowerCase().includes(this.searchValue.toLowerCase())){
+        cv.showing = true;
+      }else{
+        cv.showing = false;
       }
-      cv.filterShowing = hasEducation && hasExperience;
     });
-    // console.log(this.listOfSelectedValue);
-    // console.log(this.listOfSelectedEducation);
-    // console.log(this.listOfSelectedExperience);
+
+    this.cvs = filteredResult;
+    this.isLoading = false;
   }
 }

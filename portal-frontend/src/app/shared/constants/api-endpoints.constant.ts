@@ -7,4 +7,6 @@ export const API_ENDPOINTS = {
   educationList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/educationlist',
   experienceList: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/experiencelist',
   getSkillFilter: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/applicants',
+  getEducationFilter: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/educationapplicants',
+  removePosTemplates: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/removetemplate',
 }

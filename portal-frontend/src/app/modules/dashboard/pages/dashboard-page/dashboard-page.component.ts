@@ -48,13 +48,15 @@ export class DashboardPageComponent implements OnInit {
     xhr2.open("GET", url2);
     xhr2.onreadystatechange = function () {
       if (xhr2.readyState === 4) {
-        let temp = JSON.parse(xhr2.responseText)["Items"].map((item: { name: any; skills: any; education: any; experience: any; }) => {
+        console.log(JSON.parse(xhr2.responseText));
+        let temp = JSON.parse(xhr2.responseText)["Items"].map((item: { name: any; skills: any; education: any; experience: any; matches: any; template_id: any; }) => {
           return {
             name: item.name.S,
-            skills: item.skills.S.split(',').join(', '),
-            education: item.education.S,
+            skills: item.skills.S.split(','),
+            education: item.education.S.split(','),
             experience: item.experience.S,
-            matches: -1
+            matches: item.matches.N,
+            template_id: item.template_id.S
           }
         });
         temp = temp.sort((a: any, b: any) => {
