@@ -53,7 +53,6 @@ applicantEdu = list(dict.fromkeys(applicantEdu))
 print("Education")
 print(applicantEdu)
 
-
 print("Skills")
 print(pureSkillArr)
 
