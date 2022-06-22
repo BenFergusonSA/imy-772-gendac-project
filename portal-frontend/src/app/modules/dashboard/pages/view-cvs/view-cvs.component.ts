@@ -227,7 +227,6 @@ export class ViewCvsComponent implements OnInit {
     this.listOfSelectedValue = [];
     this.listOfSelectedEducation = [];
     this.listOfSelectedExperience = [];
-    this.searchValue = "";
     this.typedSkillValue = "";
     this.typedEducationValue = "";
     this.filterAccuracy = 65;
