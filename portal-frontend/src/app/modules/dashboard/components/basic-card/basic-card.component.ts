@@ -16,10 +16,19 @@ export class BasicCardComponent implements OnInit {
   @Input() template_id = '';
 
   small: NzSizeDSType = 'small';
+
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+
+  scrollShadow(e: any){
+    console.log(e.target.scrollTop);
+    console.log(e.target.scrollHeight - e.target.clientHeight);
+
+    e.target.querySelector(".shadow--top").style.opacity = e.target.scrollTop / (e.target.scrollHeight - e.target.clientHeight);
+    e.target.querySelector(".shadow--bottom").style.opacity = 1 - (e.target.scrollTop / (e.target.scrollHeight - e.target.clientHeight));
   }
 
 }

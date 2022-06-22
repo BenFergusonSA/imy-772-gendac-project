@@ -1,37 +1,38 @@
-<nz-card>
+<nz-card class="mainCard">
   <div class="card-title">
     <h2>{{name}}</h2>
   </div>
   <hr />
-  <div class="cardData">
-    <h3>Skills</h3>
-    <div nz-row nzJustify="center" [nzGutter]="24">
-      <div *ngFor="let skill of skills" nz-col [nzSpan]="8" class="skills">
-        <nz-card [nzSize]="small" class="skillCard">
-          <div class="card-title">{{skill}}</div>
-        </nz-card>
+  <div class="outerCard">
+    <div class="cardData" (scroll)="scrollShadow($event)">
+      <div class="shadow shadow--top"></div>
+      <div class="shadow shadow--bottom"></div>
+      <h3>Skills</h3>
+      <div nz-row nzJustify="center" [nzGutter]="24">
+        <div *ngFor="let skill of skills" nz-col [nzSpan]="8" class="skills">
+          <nz-card [nzSize]="small" class="skillCard">
+            <div class="card-title">{{skill}}</div>
+          </nz-card>
+        </div>
+      </div>
+      <!-- <p>{{skills}}</p> -->
+      <h3>Education</h3>
+      <div nzJustify="center">
+        <nz-list nzBordered nzSize="small" class="education">
+          <nz-list-item *ngFor="let edu of education">{{edu}}</nz-list-item>
+        </nz-list>
+        <!-- <div *ngFor="let edu of education" nz-col [nzSpan]="24" class="education">
+          <nz-card [nzSize]="small" class="educationCard">
+            <div class="card-title">{{edu}}</div>
+          </nz-card>
+        </div> -->
       </div>
     </div>
-    <!-- <p>{{skills}}</p> -->
+    <!-- <div class="cardData">
+
+    </div> -->
+
   </div>
-  <div class="cardData">
-    <h3>Education</h3>
-    <div nzJustify="center">
-      <nz-list nzBordered nzSize="small" class="education">
-        <nz-list-item *ngFor="let edu of education">{{edu}}</nz-list-item>
-      </nz-list>
-      <!-- <div *ngFor="let edu of education" nz-col [nzSpan]="24" class="education">
-        <nz-card [nzSize]="small" class="educationCard">
-          <div class="card-title">{{edu}}</div>
-        </nz-card>
-      </div> -->
-    </div>
-    <!-- <p>{{education}}</p> -->
-  </div>
-  <!-- <div class="cardData">
-    <h3>Experience</h3>
-    <p>{{experience}}</p>
-  </div> -->
 
   <hr />
 
