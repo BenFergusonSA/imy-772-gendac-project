@@ -19,7 +19,8 @@ export class UploadCvService {
     try {
       return new Promise<void>(async (resolve, reject) => {
         await Storage.put(fileName, file);
-
+        
+        formDetails.uuid = cvUuid;
         this.httpClient.post(API_ENDPOINTS.uploadCv, formDetails).subscribe({
           next: async (data) => {
             this.httpClient.post(API_ENDPOINTS.triggerCvParse, {
