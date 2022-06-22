@@ -1,9 +1,9 @@
 import 'dotenv/config'
 import express from "express";
 import axios from "axios";
-import {downloadFile} from './services/s3'
-import {parseCV, readParsedResults} from './services/cv-parser'
-import {deleteTempFiles} from './services/file-helper'
+import {downloadFile} from './services/s3.js'
+import {parseCV, readParsedResults} from './services/cv-parser.js'
+import {deleteTempFiles} from './services/file-helper.js'
 import cors from 'cors';
 
 const port = process.env.PORT || 3200;
