@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import {spawn} from 'child_process';
+import {spawnSync} from 'child_process';
 
 const STORAGE_PATH = './storage';
 
@@ -12,11 +12,17 @@ const parseCV = async () => {
 
         const __dirname = path.resolve();
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'Final_Resume_Parser.py');
-        const cvParser = spawn('python3', [scriptPath]);
 
         return new Promise((resolve) => {
+            const cvParser = spawnSync('python3', [scriptPath], { stdio: 'inherit' });
+
             cvParser.on('close', (code) => {
-                console.log('Parsed CV file')
+                console.log('Parse CV: Close event');
+                // resolve({success: true})
+            });
+
+            cvParser.on('exit', (code) => {
+                console.log('Parse CV: Exit event');
                 resolve({success: true})
             });
         })
