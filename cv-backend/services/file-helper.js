@@ -1,5 +1,5 @@
-import fs from 'fs';
 import path from 'path';
+import rimraf from "rimraf";
 
 const STORAGE_PATH = './storage';
 
@@ -9,11 +9,11 @@ const deleteTempFiles = async () => {
     try {
         const __dirname = path.resolve();
         const cvFilePath = path.join(__dirname, STORAGE_PATH, 'temp.pdf');
-        const resultsFilePath = path.join(__dirname, STORAGE_PATH, 'temp.pdf');
+        const resultsFilePath = path.join(__dirname, STORAGE_PATH, 'results.json');
 
         console.log('Deleting files');
-        await fs.unlinkSync(cvFilePath);
-        await fs.unlinkSync(resultsFilePath);
+        await rimraf.sync(cvFilePath);
+        await rimraf.sync(resultsFilePath);
 
         console.log('Deleted temp files')
         return {success: true}
