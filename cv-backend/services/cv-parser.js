@@ -16,6 +16,11 @@ const parseCV = async () => {
         return new Promise((resolve) => {
             const cvParser = spawn('python3', [scriptPath]);
 
+            cvParser.on('error', (error) => {
+                console.error('Parse CV: Error event', error);
+                resolve({success: false})
+            });
+
             cvParser.on('close', (code) => {
                 console.log('Parse CV: Close event');
                 resolve({success: true})
@@ -26,7 +31,7 @@ const parseCV = async () => {
             });
         })
     } catch (error) {
-        console.error('Failed to CV file', error);
+        console.error('Failed to parse CV file', error);
         return {success: false}
     }
 }
