@@ -22,12 +22,8 @@ const parseCV = async () => {
             });
 
             cvParser.on('close', (code) => {
-                console.log('Parse CV: Close event');
-                // resolve({success: true})
-            });
-
-            cvParser.on('exit', (code) => {
-                console.log('Parse CV: Exit event');
+                console.log('Parse CV: Close event', code);
+                resolve({success: true});
             });
         })
     } catch (error) {
