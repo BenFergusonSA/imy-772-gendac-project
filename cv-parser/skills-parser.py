@@ -1,8 +1,6 @@
 from pdfminer.high_level import extract_text
 import spacy
-from spacy import displacy
 import json
-import re
 
 def convertToText(fname):
     return extract_text(fname)
