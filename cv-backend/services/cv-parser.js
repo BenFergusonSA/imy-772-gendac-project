@@ -14,7 +14,7 @@ const parseCV = async () => {
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'Final_Resume_Parser.py');
 
         return new Promise((resolve) => {
-            const cvParser = spawn('python3', [scriptPath], { stdio: 'inherit' });
+            const cvParser = spawn('python3', [scriptPath]);
 
             cvParser.on('close', (code) => {
                 console.log('Parse CV: Close event');
