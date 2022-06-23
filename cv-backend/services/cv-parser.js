@@ -14,6 +14,7 @@ const parseCV = async () => {
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'Final_Resume_Parser.py');
 
         const result = await new Promise((resolve) => {
+            console.log('PATH', scriptPath);
             const cvParser = spawn('ls', [scriptPath]);
 
             cvParser.on('error', (error) => {
