@@ -25,9 +25,13 @@ const parseCV = async () => {
                 console.log('Parse CV: Data event', data.toString());
             });
 
+	    cvParser.stderr.on('data', (data) => {
+  		console.error('Parse CV: Error event', data.toString());
+	    });
+
             cvParser.on('close', (code) => {
                 console.log('Parse CV: Close event', code);
-                resolve({success: true});
+                // resolve({success: true});
             });
         })
 
