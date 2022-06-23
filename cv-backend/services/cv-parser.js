@@ -23,11 +23,11 @@ const parseCV = async () => {
 
             cvParser.on('close', (code) => {
                 console.log('Parse CV: Close event', code);
-                resolve({success: true});
+                // resolve({success: true});
             });
         })
 
-        console.log('Parsed CV');
+        console.log('Parsed CV', result);
         return result;
     } catch (error) {
         console.error('Failed to parse CV file', error);
@@ -43,11 +43,11 @@ const readParsedResults = async () => {
         const __dirname = path.resolve();
         const filePath = path.join(__dirname, STORAGE_PATH, 'results.json');
         let rawFile = fs.readFileSync(filePath);
-        let skills = JSON.parse(rawFile);
+        let parsedResults = JSON.parse(rawFile);
         console.log("Read CV parsed results");
         return {
             success: true,
-            data: skills
+            data: parsedResults
         }
     } catch (error) {
         console.error('Failed to read CV parsed results', error);
