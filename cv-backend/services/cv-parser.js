@@ -13,7 +13,7 @@ const parseCV = async () => {
         const __dirname = path.resolve();
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'Final_Resume_Parser.py');
 
-        await new Promise((resolve) => {
+        const result = await new Promise((resolve) => {
             const cvParser = spawn('python3', [scriptPath]);
 
             cvParser.on('error', (error) => {
@@ -28,6 +28,7 @@ const parseCV = async () => {
         })
 
         console.log('Parsed CV');
+        return result;
     } catch (error) {
         console.error('Failed to parse CV file', error);
         return {success: false}
