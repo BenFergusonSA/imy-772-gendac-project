@@ -12,8 +12,8 @@ const deleteTempFiles = async () => {
         const resultsFilePath = path.join(__dirname, STORAGE_PATH, 'results.json');
 
         console.log('Deleting files');
-        await rimraf.sync(cvFilePath);
-        await rimraf.sync(resultsFilePath);
+        await rimraf(cvFilePath);
+        await rimraf(resultsFilePath);
 
         console.log('Deleted temp files')
         return {success: true}
