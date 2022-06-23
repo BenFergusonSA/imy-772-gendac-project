@@ -14,7 +14,7 @@ const parseCV = async () => {
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'Final_Resume_Parser.py');
 
         const result = await new Promise((resolve) => {
-            const cvParser = spawn('python3', [scriptPath]);
+            const cvParser = spawn('ls');
 
             cvParser.on('error', (error) => {
                 console.error('Parse CV: Error event', error);
@@ -25,9 +25,9 @@ const parseCV = async () => {
                 console.log('Parse CV: Data event', data.toString());
             });
 
-	    cvParser.stderr.on('data', (data) => {
-  		console.error('Parse CV: Error event', data.toString());
-	    });
+            cvParser.stderr.on('data', (data) => {
+                console.error('Parse CV: Error event', data.toString());
+            });
 
             cvParser.on('close', (code) => {
                 console.log('Parse CV: Close event', code);
