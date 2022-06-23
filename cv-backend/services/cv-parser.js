@@ -23,7 +23,7 @@ const parseCV = async () => {
 
             cvParser.on('close', (code) => {
                 console.log('Parse CV: Close event', code);
-                // resolve({success: true});
+                resolve({success: true});
             });
         })
 
