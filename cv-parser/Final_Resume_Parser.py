@@ -27,12 +27,10 @@ doc = nlp(text)
 #filters unnecessary stop words and remove special characters
 filtered = [token.text for token in doc if token.is_stop == False]
 text_no_punt = [re.sub('[^a-zA-Z0-9]+', '', _) for _ in filtered]
+text_no_punt = [x.lower() for x in text_no_punt]
 
 #extract skills from document
-skillArrWithDups = []
-for ent in doc.ents:
-    if ent.label_ == 'SKILL':
-        skillArrWithDups.append(ent.text)
+skillArrWithDups = [ent.text for ent in doc.ents if ent.label_ == 'SKILL']
 
 for i in range(len(skillArrWithDups)):
     skillArrWithDups[i] = skillArrWithDups[i].upper()
@@ -41,12 +39,7 @@ for i in range(len(skillArrWithDups)):
 pureSkillArr = list(dict.fromkeys(skillArrWithDups))
 
 #extract education from document
-applicantEdu = []
-for i in text_no_punt:
-    for j in EDUCATION:
-        if j.lower() in i.lower():
-            applicantEdu.append(j)
-
+applicantEdu = [i for i in EDUCATION if i.lower() in text_no_punt]
 #remove education duplicates
 applicantEdu = list(dict.fromkeys(applicantEdu))
 
