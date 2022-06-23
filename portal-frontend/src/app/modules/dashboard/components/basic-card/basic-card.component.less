@@ -82,7 +82,14 @@ button {
 .cardData {
   height:20vh;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   box-shadow: inset;
+
+}
+
+.cardData::-webkit-scrollbar {
+  display: none;
 }
 
 .outerCard {
