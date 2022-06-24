@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import {spawn, exec} from 'child_process';
+import {spawn} from 'child_process';
 
 const STORAGE_PATH = './storage';
 
@@ -40,7 +40,7 @@ const parseSkills = async () => {
 
         const __dirname = path.resolve();
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'skills-parser.py');
-        const cvParser = exec('python3 ' + scriptPath);
+        const cvParser = spawn('python3', [scriptPath]);
 
         return new Promise((resolve) => {
             cvParser.on('close', (code) => {
