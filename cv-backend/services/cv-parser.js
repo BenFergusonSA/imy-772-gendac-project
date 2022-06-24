@@ -40,7 +40,8 @@ const parseSkills = async () => {
 
         const __dirname = path.resolve();
         const scriptPath = path.join(__dirname, '..', 'cv-parser', 'skills-parser.py');
-        const cvParser = spawn('python3', [scriptPath]);
+        const scriptDir = path.join(__dirname, '..', 'cv-parser');
+        const cvParser = spawn('python3', [scriptPath], {cwd: scriptDir});
 
         return new Promise((resolve) => {
             cvParser.on('close', (code) => {
