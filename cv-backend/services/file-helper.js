@@ -9,11 +9,13 @@ const deleteTempFiles = async () => {
     try {
         const __dirname = path.resolve();
         const cvFilePath = path.join(__dirname, STORAGE_PATH, 'temp.pdf');
-        const resultsFilePath = path.join(__dirname, STORAGE_PATH, 'results.json');
+        const skillsResultsFilePath = path.join(__dirname, STORAGE_PATH, 'skills-results.json');
+        const educationResultsFilePath = path.join(__dirname, STORAGE_PATH, 'education-results.json');
 
         console.log('Deleting files');
         await rimraf.sync(cvFilePath);
-        await rimraf.sync(resultsFilePath);
+        await rimraf.sync(skillsResultsFilePath);
+        await rimraf.sync(educationResultsFilePath);
 
         console.log('Deleted temp files')
         return {success: true}
