@@ -3,6 +3,12 @@ import spacy
 import json
 import re
 
+class SetEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
+        return json.JSONEncoder.default(self, obj)
+
 def convertToText(fname):
     return extract_text(fname)
 
@@ -32,7 +38,7 @@ print(applicantEdu)
 results = {
     "education": applicantEdu
 }
-resultData = json.dumps(results)
+resultData = json.dumps(results, cls=SetEncoder)
 print(resultData)
 f = open("../cv-backend/storage/education-results.json", "w")
 f.write(resultData)
