@@ -14,7 +14,7 @@ EDUCATION = [
 
 nlp = spacy.load("en_core_web_lg")
 
-ruler = nlp.add_pipe("entity_ruler", before="ner")
+# ruler = nlp.add_pipe("entity_ruler", before="ner")
 
 text = convertToText("../cv-backend/storage/temp.pdf")
 doc = nlp(text)

@@ -2,6 +2,12 @@ from pdfminer.high_level import extract_text
 import spacy
 import json
 
+class SetEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
+        return json.JSONEncoder.default(self, obj)
+
 def convertToText(fname):
     return extract_text(fname)
 
@@ -29,7 +35,7 @@ print(pureSkillArr)
 results = {
     "skills": pureSkillArr
 }
-resultData = json.dumps(results)
+resultData = json.dumps(results, cls=SetEncoder)
 print(resultData)
 f = open("../cv-backend/storage/skills-results.json", "w")
 f.write(resultData)
