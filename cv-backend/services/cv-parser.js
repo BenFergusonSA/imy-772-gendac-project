@@ -10,12 +10,12 @@ const parseCV = async () => {
     try {
         console.debug('Running python scripts');
 
-        // const parsedSkillsResult = await parseSkills();
-        //
-        // if (!parsedSkillsResult.success) {
-        //     console.error('Failed to parse CV file for skills');
-        //     return {success: false}
-        // }
+        const parsedSkillsResult = await parseSkills();
+
+        if (!parsedSkillsResult.success) {
+            console.error('Failed to parse CV file for skills');
+            return {success: false}
+        }
 
         const parsedEducationResult = await parseEducation();
 
