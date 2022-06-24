@@ -10,12 +10,12 @@ const parseCV = async () => {
     try {
         console.debug('Running python scripts');
 
-        const parsedSkillsResult = await parseSkills();
-
-        if (!parsedSkillsResult.success) {
-            console.error('Failed to parse CV file for skills');
-            return {success: false}
-        }
+        // const parsedSkillsResult = await parseSkills();
+        //
+        // if (!parsedSkillsResult.success) {
+        //     console.error('Failed to parse CV file for skills');
+        //     return {success: false}
+        // }
 
         const parsedEducationResult = await parseEducation();
 
@@ -24,6 +24,8 @@ const parseCV = async () => {
             return {success: false}
         }
 
+        console.debug('Finished running python scripts');
+        return {success: true}
     } catch (error) {
         console.error('Failed to parse CV file', error);
         return {success: false}
@@ -42,7 +44,7 @@ const parseSkills = async () => {
 
         return new Promise((resolve) => {
             cvParser.on('close', (code) => {
-                console.log('Parsed CV for skills')
+                console.log('Exiting parse CV for skills python script');
                 resolve({success: true})
             });
 
@@ -73,7 +75,7 @@ const parseEducation = async () => {
 
         return new Promise((resolve) => {
             cvParser.on('close', (code) => {
-                console.log('Parsed CV file for education')
+                console.log('Exiting parse CV for education python script');
                 resolve({success: true})
             });
 
