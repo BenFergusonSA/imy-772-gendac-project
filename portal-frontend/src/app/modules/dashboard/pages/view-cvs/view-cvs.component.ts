@@ -69,6 +69,7 @@ export class ViewCvsComponent implements OnInit {
   typedEducationValue: string = "";
 
   isLoading: boolean = true;
+  alreadyMatches: boolean = false;
 
   cvs: any[] = [
     {
@@ -188,7 +189,7 @@ export class ViewCvsComponent implements OnInit {
             outerThis.educationList = temp2.map((item: { id: any; education: any; }) => {
               return item.education;
             });
-
+            const template_id = outerThis.router.parseUrl(outerThis.router.url).queryParams["template_id"];
             const routeParams = outerThis.router.parseUrl(outerThis.router.url).queryParams;
             if(routeParams["searchTerm"] != null){
               outerThis.searchValue = routeParams["searchTerm"] || "";
@@ -442,6 +443,32 @@ export class ViewCvsComponent implements OnInit {
             }
             return present;
           });
+          //check if we viewing a template or not
+
+          if (outerThis.router.parseUrl(outerThis.router.url).queryParams["template_id"] != null){
+            if(outerThis.alreadyMatches == false){
+              //Post request
+              let numOfMatches = filteredResult.length;
+              let jsonObj = {
+                "template_id": outerThis.router.parseUrl(outerThis.router.url).queryParams["template_id"],
+                "numOfMatches": filteredResult.length
+              }
+              try {
+                outerThis.httpClient.post(API_ENDPOINTS.matchedTemplates, jsonObj).subscribe({
+          
+                  next: (data) => {
+                    console.log(data);
+          
+                  },
+                  error: (err) => { console.log(err) },
+          
+                });
+              }catch (error) {
+                console.log("Error creating template: ", error);
+                throw Error('Error creating template');
+              }
+            }
+          }
           outerThis.filterSearch(filteredResult);
         }
       }
