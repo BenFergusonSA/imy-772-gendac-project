@@ -59,6 +59,7 @@ export class DashboardPageComponent implements OnInit {
             template_id: item.template_id.S
           }
         });
+        console.log(temp);
         temp = temp.sort((a: any, b: any) => {
           return b.name.toLowerCase() < a.name.toLowerCase() ? 1 : -1;
         });
