@@ -16,7 +16,7 @@ export class UploadSingleCvComponent implements OnInit {
   uploadCvForm!: FormGroup;
   uploadState: LoaderStateModel = new LoaderStateModel();
 
-  constructor(private fb: FormBuilder, private router: Router, private uploadCvService: UploadCvService, private notification: NzNotificationService) {
+  constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -53,15 +53,17 @@ export class UploadSingleCvComponent implements OnInit {
 
     //formDetails.fileName123 = this.fileList[0].name.replace(" ", "_");
     try {
-      await this.uploadCvService.uploadSingleCv(this.fileList[0], formDetails);
+      const formDetails = this.uploadCvForm.getRawValue();
 
-      this.uploadState.onSuccess();
-      this.notification.create(
-        'success',
-        'Upload CV',
-        'The CV has successfully been uploaded.'
-      );
-      this.router.navigate(['portal','dashboard','view-cvs']);
+      await this.uploadCvService.uploadSingleCv(this.fileList[0], formDetails).then(() => {
+        this.uploadState.onSuccess();
+        this.notification.create(
+          'success',
+          'Upload CV',
+          'The CV has successfully been uploaded.'
+        );
+        this.router.navigate(['portal','dashboard','view-cvs']);
+      })
     } catch (error) {
       this.uploadState.onFailure('Failed to upload CV');
       this.notification.create(

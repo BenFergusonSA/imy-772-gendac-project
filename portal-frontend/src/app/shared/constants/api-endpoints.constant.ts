@@ -9,4 +9,5 @@ export const API_ENDPOINTS = {
   getSkillFilter: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/applicants',
   getEducationFilter: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/educationapplicants',
   removePosTemplates: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/removetemplate',
+  triggerCvParse: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/trigger-cv'
 }
