@@ -100,7 +100,7 @@
               </div>
             </nz-card>
           </div>
-          <div nz-col [nzSpan]="7" class="main">
+          <div nz-col [nzSpan]="5" class="main">
             <nz-card>
               <div class="card-title">
                 <h3>Phone <span class="dataValue">{{cv.phoneNumber}}</span></h3>
@@ -108,9 +108,16 @@
             </nz-card>
           </div>
           <div nz-col [nzSpan]="3" class="main">
-            <nz-card class="pdfCard" (click)="downloadPDF(cv.pdfURL)">
+            <nz-card class="pdfCard" (click)="viewPDF(cv.pdfURL)">
               <div class="card-title">
                 <h3>View PDF <i nz-icon nzType="file-pdf" nzTheme="outline"></i></h3>
+              </div>
+            </nz-card>
+          </div>
+          <div nz-col [nzSpan]="2" class="main">
+            <nz-card class="pdfCard" (click)="downloadPDF(cv.pdfURL)">
+              <div class="card-title">
+                <h3><i nz-icon nzType="download" nzTheme="outline"></i></h3>
               </div>
             </nz-card>
           </div>

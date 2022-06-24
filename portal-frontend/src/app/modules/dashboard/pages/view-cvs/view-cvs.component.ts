@@ -252,7 +252,7 @@ export class ViewCvsComponent implements OnInit {
               email: item.email.S,
               phoneNumber: item.phoneNumber.S,
               uuid: item.uuid.S,
-              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+item.uuid.S,
+              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+item.uuid.S+".pdf",
               skills: ["Loading..."],
               education: ["Loading..."],
               experience: "Loading...",
@@ -322,6 +322,30 @@ export class ViewCvsComponent implements OnInit {
         if(xhr.status === 200){
           // Content-Type: application/pdf
           // Content-Disposition: inline; filename="filename.pdf"
+          //outerThis.router.navigate(['portal','dashboard','view-pdf'], { queryParams: { pdfSrc: url } });
+          window.open(url, '_blank');
+        }else{
+          outerThis.notification.create(
+            'error',
+            'PDF file not available',
+            "This file doesn't seem to be available right now. Please try again later."
+          );
+        }
+        console.log(xhr.status);
+      }};
+
+    xhr.send();
+
+  }
+  viewPDF(url: any): any {
+    const outerThis = this;
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if(xhr.status === 200){
+          // Content-Type: application/pdf
+          // Content-Disposition: inline; filename="filename.pdf"
           outerThis.router.navigate(['portal','dashboard','view-pdf'], { queryParams: { pdfSrc: url } });
         }else{
           outerThis.notification.create(
@@ -335,7 +359,7 @@ export class ViewCvsComponent implements OnInit {
 
     xhr.send();
 
-    // window.open(url, '_blank');
+    //window.open(url, '_blank');
   }
 
   search(value: any) {
@@ -378,7 +402,7 @@ export class ViewCvsComponent implements OnInit {
               email: applicant[0].Item.email.S,
               phoneNumber: applicant[0].Item.phoneNumber.S,
               uuid: applicant[0].Item.uuid.S,
-              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+applicant[0].Item.uuid.S,
+              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+applicant[0].Item.uuid.S+".pdf",
               skills: applicant[1].skills.SS,
               education: applicant[1].education.SS,
               experience: applicant[1].experience.S,
@@ -423,7 +447,7 @@ export class ViewCvsComponent implements OnInit {
               email: applicant[0].Item.email.S,
               phoneNumber: applicant[0].Item.phoneNumber.S,
               uuid: applicant[0].Item.uuid.S,
-              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+applicant[0].Item.uuid.S,
+              pdfURL: "http://gendac-cvs80138-dev.s3.amazonaws.com/public/"+applicant[0].Item.uuid.S+".pdf",
               skills: applicant[1].skills.SS,
               education: applicant[1].education.SS,
               experience: applicant[1].experience.S,
