@@ -59,6 +59,7 @@ app.post('/process-cv', async (req, res) => {
     await axios.post('https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/staging/upload-parsed-skills', {
         "applicantUUID": applicantCVUUID,
         "skills": parsedResults.data.skills,
+        "education": parsedResults.data.education,
     });
 
     console.log('Made request to lambda');
