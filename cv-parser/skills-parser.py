@@ -18,8 +18,9 @@ skillsFile = "./jz_skill_patterns.jsonl"
 
 pathToSkills = Path(skillsFile)
 
-fileExists = pathToSkills.is_file();
-
+fileExists = pathToSkills.is_file()
+absolutePath = pathToSkills.absolute()
+print(absolutePath)
 print("Skills file exists?")
 print(fileExists)
 
