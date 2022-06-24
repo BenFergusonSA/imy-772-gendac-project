@@ -1,6 +1,7 @@
 from pdfminer.high_level import extract_text
 import spacy
 import json
+from pathlib import Path
 
 class SetEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -13,11 +14,18 @@ def convertToText(fname):
 
 nlp = spacy.load("en_core_web_lg")
 
-skills = "jz_skill_patterns.jsonl"
+skillsFile = "./jz_skill_patterns.jsonl"
+
+pathToSkills = Path(skillsFile)
+
+fileExists = pathToSkills.is_file();
+
+print("Skills file exists?")
+print(fileExists)
 
 ruler = nlp.add_pipe("entity_ruler", before="ner")
 
-ruler.from_disk(skills)
+ruler.from_disk(pathToSkills)
 
 text = convertToText("../cv-backend/storage/temp.pdf")
 doc = nlp(text)
