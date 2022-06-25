@@ -71,7 +71,7 @@
     </div>
 
     <div nz-col [nzSpan]="24">
-      <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload">
+      <nz-upload [(nzFileList)]="fileList" [nzBeforeUpload]="beforeUpload" [nzAccept]="'application/pdf'">
         <button nz-button>
           <i nz-icon nzType="upload"></i>
           Select File

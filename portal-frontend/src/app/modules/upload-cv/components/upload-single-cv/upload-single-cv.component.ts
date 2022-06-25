@@ -15,17 +15,21 @@ export class UploadSingleCvComponent implements OnInit {
   fileList: NzUploadFile[] = [];
   uploadCvForm!: FormGroup;
   uploadState: LoaderStateModel = new LoaderStateModel();
-
+  isValidFormSubmitted: boolean | null = null;
+  namePattern = "^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$" as unknown as RegExp;
+  emailPattern = "^([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])"  as unknown as RegExp;
+  idPattern = "^[0-9]*$" as unknown as RegExp;
+  phonePattern = "^([0-9]{10})" as unknown as RegExp;
   constructor(private fb: FormBuilder, private uploadCvService: UploadCvService, private notification: NzNotificationService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.uploadCvForm = this.fb.group({
-      firstName: [null, [Validators.required]],
-      surname: [null, [Validators.required]],
-      email: [null, [Validators.email, Validators.required]],
-      phoneNumber: [null, [Validators.required]],
-      idNumber: [null, [Validators.required]],
+      firstName: [null, [Validators.required, Validators.pattern(this.namePattern)]],
+      surname: [null, [Validators.required, Validators.pattern(this.namePattern)]],
+      email: [null, [Validators.required, Validators.pattern(this.emailPattern)]],
+      phoneNumber: [null, [Validators.required, Validators.pattern(this.phonePattern)]],
+      idNumber: [null, [Validators.required, Validators.pattern(this.idPattern)]],
     });
   }
 
@@ -38,7 +42,6 @@ export class UploadSingleCvComponent implements OnInit {
     if (!this.uploadCvForm.valid) {
       return;
     }
-
     this.uploadState.startLoader();
 
     const formData = new FormData();
