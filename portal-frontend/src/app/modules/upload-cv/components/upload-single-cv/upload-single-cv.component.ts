@@ -51,19 +51,19 @@ export class UploadSingleCvComponent implements OnInit {
       formData.append(formDetail, formDetails[formDetail])
     })
 
-    //formDetails.fileName123 = this.fileList[0].name.replace(" ", "_");
     try {
       const formDetails = this.uploadCvForm.getRawValue();
 
-      await this.uploadCvService.uploadSingleCv(this.fileList[0], formDetails).then(() => {
-        this.uploadState.onSuccess();
-        this.notification.create(
-          'success',
-          'Upload CV',
-          'The CV has successfully been uploaded.'
-        );
-        this.router.navigate(['portal','dashboard','view-cvs']);
-      })
+      const cvUuid = await this.uploadCvService.uploadSingleCv(this.fileList[0], formDetails);
+      await this.uploadCvService.waitForCVParsing(cvUuid);
+
+      this.uploadState.onSuccess();
+      this.notification.create(
+        'success',
+        'Upload CV',
+        'The CV has successfully been uploaded.'
+      );
+      this.router.navigate(['portal','dashboard','view-cvs']).catch(() => {});
     } catch (error) {
       this.uploadState.onFailure('Failed to upload CV');
       this.notification.create(

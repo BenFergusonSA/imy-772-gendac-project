@@ -4,6 +4,8 @@ import {NzUploadFile} from "ng-zorro-antd/upload";
 import * as uuid from "uuid";
 import {API_ENDPOINTS} from "../../../shared/constants/api-endpoints.constant";
 import {HttpClient} from "@angular/common/http";
+import {interval} from "rxjs";
+import {isNil} from "lodash";
 
 
 @Injectable({
@@ -18,9 +20,9 @@ export class UploadCvService {
     const cvUuid = uuid.v4();
     const fileName = cvUuid + '.pdf';
     try {
-      return new Promise<void>(async (resolve, reject) => {
+      return new Promise<string>(async (resolve, reject) => {
         await Storage.put(fileName, file);
-        
+
         formDetails.uuid = cvUuid;
         this.httpClient.post(API_ENDPOINTS.uploadCv, formDetails).subscribe({
           next: async (data) => {
@@ -28,7 +30,7 @@ export class UploadCvService {
               applicantCVUUID: cvUuid
             }).subscribe({
               next: () => {
-                resolve();
+                resolve(cvUuid);
               },
               error: (err) => {
                 console.log(err);
@@ -46,5 +48,28 @@ export class UploadCvService {
       console.log("Error uploading file: ", error);
       throw Error('Failed to upload CV');
     }
+  }
+
+  async waitForCVParsing(cvUuid: string) {
+    return new Promise<void>(async (resolve) => {
+      const pollTimer$ = interval(5000)
+        .subscribe(() => {
+          this.httpClient.post(API_ENDPOINTS.getCVForUpload, {
+            applicantCVUUID: cvUuid
+          }).subscribe({
+            next: (data) => {
+              if (isNil(data)) {
+                return;
+              }
+
+              resolve();
+              pollTimer$.unsubscribe();
+            },
+            error: () => {
+              console.log("CV hasn't completed parsing");
+            },
+          })
+        })
+    });
   }
 }
