@@ -6,6 +6,7 @@ import {API_ENDPOINTS} from "../../../shared/constants/api-endpoints.constant";
 import {HttpClient} from "@angular/common/http";
 import {interval} from "rxjs";
 import {isNil} from "lodash";
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,8 @@ export class UploadCvService {
             cv_id: cvUuid
           }).subscribe({
             next: (data) => {
-              if (isNil(data)) {
+              console.log(data)
+              if (_.isEqual(data, {})) {
                 return;
               }
 
