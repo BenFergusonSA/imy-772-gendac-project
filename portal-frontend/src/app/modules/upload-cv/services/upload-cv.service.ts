@@ -7,7 +7,6 @@ import {HttpClient} from "@angular/common/http";
 import {interval} from "rxjs";
 import {isNil} from "lodash";
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -54,8 +53,9 @@ export class UploadCvService {
     return new Promise<void>(async (resolve) => {
       const pollTimer$ = interval(5000)
         .subscribe(() => {
-          const apiRoute = `${API_ENDPOINTS.getCVForUpload}/${cvUuid}`
-          this.httpClient.get(apiRoute).subscribe({
+          this.httpClient.post(API_ENDPOINTS.getCVForUpload, {
+            cvId: cvUuid
+          }).subscribe({
             next: (data) => {
               if (isNil(data)) {
                 return;
