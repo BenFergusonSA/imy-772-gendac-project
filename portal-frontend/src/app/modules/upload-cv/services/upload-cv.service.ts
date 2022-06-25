@@ -54,7 +54,7 @@ export class UploadCvService {
       const pollTimer$ = interval(5000)
         .subscribe(() => {
           this.httpClient.post(API_ENDPOINTS.getCVForUpload, {
-            cvId: cvUuid
+            cv_id: cvUuid
           }).subscribe({
             next: (data) => {
               if (isNil(data)) {
