@@ -11,5 +11,5 @@ export const API_ENDPOINTS = {
   removePosTemplates: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/removetemplate',
   triggerCvParse: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/trigger-cv',
   matchedTemplates: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/positiontemplates/updatematchedtemplates',
-  getCVForUpload: ''
+  getCVForUpload: 'https://sfdonpysy8.execute-api.eu-west-1.amazonaws.com/Test/cv'
 }

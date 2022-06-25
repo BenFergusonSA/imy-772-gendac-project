@@ -54,9 +54,8 @@ export class UploadCvService {
     return new Promise<void>(async (resolve) => {
       const pollTimer$ = interval(5000)
         .subscribe(() => {
-          this.httpClient.post(API_ENDPOINTS.getCVForUpload, {
-            applicantCVUUID: cvUuid
-          }).subscribe({
+          const apiRoute = `${API_ENDPOINTS.getCVForUpload}/${cvUuid}`
+          this.httpClient.get(apiRoute).subscribe({
             next: (data) => {
               if (isNil(data)) {
                 return;
