@@ -122,10 +122,11 @@ export class CreatePositionComponent implements OnInit {
    }
 
   submitForm(): void {
+    console.log("submitted")
     if (this.validateForm.valid) {
       if(this.router.parseUrl(this.router.url).queryParams["name"] != null){
         let template_id = this.router.parseUrl(this.router.url).queryParams["template_id"];
-
+        
         this.removeFromDB(template_id);
       }else{
         this.addToDB();
@@ -175,6 +176,7 @@ export class CreatePositionComponent implements OnInit {
   }
 
   removeFromDB(template_id: any){
+    console.log("hello there")
     const removeJson = {
         "template_id": template_id
     };
@@ -194,6 +196,7 @@ export class CreatePositionComponent implements OnInit {
   }
 
   removeOnly(){
+    console.log("remove only")
     const removeJson = {
         "template_id": this.router.parseUrl(this.router.url).queryParams["template_id"]
     };

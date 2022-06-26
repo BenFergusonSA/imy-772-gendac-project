@@ -5,7 +5,7 @@
     <div nz-row [nzGutter]="[24,24]">
       <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="{span:12,offset:6}" [nzLg]="{span:12,offset:6}" [nzXl]="{span:8,offset:8}" class="gutter-row">
         <nz-card>
-          <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+          <form nz-form [formGroup]="validateForm">
             <nz-form-item>
               <nz-form-label [nzSm]="9" [nzXs]="24" nzRequired nzFor="name">Name</nz-form-label>
               <nz-form-control [nzSm]="15" [nzXs]="24" nzErrorTip="The input is not valid Name!">
@@ -61,7 +61,7 @@
                 <button nz-button nzType="default" nzDanger *ngIf="createBtnText == 'Update'" (click)="removeOnly()">Delete</button>
               </nz-form-control>
               <nz-form-control [nzSpan]="12">
-                <button nz-button nzType="primary">{{createBtnText}}</button>
+                <button nz-button nzType="primary" (click)="submitForm()">{{createBtnText}}</button>
               </nz-form-control>
             </nz-form-item>
           </form>
