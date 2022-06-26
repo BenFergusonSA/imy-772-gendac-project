@@ -10,18 +10,33 @@
 }
 
 nz-header {
-  padding: 0;
   width: 100%;
   z-index: 2;
-}
+  display: flex;
+  justify-content: space-between;
 
-.app-header {
-  position: relative;
   height: 64px;
   padding: 0 24px;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-  display: flex;
+
+  #app-header-logo:hover {
+    cursor: pointer;
+  }
+
+  #app-header-actions {
+    button {
+      i {
+        font-size: 20px;
+      }
+
+      &#user-button {
+        margin-left: 40px;
+      }
+    }
+
+
+  }
 }
 
 nz-content {
@@ -30,6 +45,8 @@ nz-content {
 
 .inner-content {
   padding: 24px;
-  background: #fff;
+  background: rgb(52,58,64);
   height: 100%;
+  color:#fff;
+  overflow-y: scroll;
 }

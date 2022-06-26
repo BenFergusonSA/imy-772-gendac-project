@@ -1,0 +1,123 @@
+p {
+  margin: 0;
+}
+nz-card {
+  width:100%;
+  background-color: rgb(167,170,172);
+  border-color: white;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.card-title {
+  text-align: center;
+  color: white;
+}
+
+.card-title h2 {
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+}
+
+.cardData h3 {
+  font-weight: bold;
+}
+
+.cardData p {
+  line-height: 10px;
+}
+
+.cardData {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.cardBtns {
+  margin-top: 10px;
+}
+
+.matched {
+  height: 33px;
+  border-radius: 5px;
+}
+
+.matchedText, .matchedAmount {
+  background-color: #343A40;
+  color: #7FABB2;
+  height: 33px;
+  line-height: 33px;
+  font-weight: 33px;
+}
+
+.matchedText {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: solid 1px #7FABB2;
+}
+
+.matchedAmount {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: solid 1px #7FABB2;
+  text-align: center;
+}
+
+.skillCard, .educationCard, .experienceCard {
+  background-color: rgb(52,58,64);
+}
+
+nz-list, nz-list-item {
+  border: none !important;
+}
+
+nz-list-item {
+  padding: 4px 16px !important;
+}
+
+button {
+  margin-right: 5px;
+}
+
+.cardData {
+  height:20vh;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  box-shadow: inset;
+
+}
+
+.cardData::-webkit-scrollbar {
+  display: none;
+}
+
+.outerCard {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.shadow {
+  position: absolute;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  height: 10px;
+  background: red;
+}
+
+.shadow--top {
+  top: 0;
+  background: -webkit-linear-gradient(270deg, rgba(0, 0, 0, 0.35), transparent);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent);
+  opacity: 0;
+}
+
+.shadow--bottom {
+  bottom: 0;
+  background: -webkit-linear-gradient(90deg, rgba(0, 0, 0, 0.35), transparent);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.35), transparent);
+}

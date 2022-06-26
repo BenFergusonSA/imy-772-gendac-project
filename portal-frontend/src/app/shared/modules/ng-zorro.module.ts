@@ -6,6 +6,18 @@ import {NzFormModule} from "ng-zorro-antd/form";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzInputModule} from "ng-zorro-antd/input";
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSliderModule } from 'ng-zorro-antd/slider';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzListModule } from 'ng-zorro-antd/list';
 
 @NgModule({
   exports: [
@@ -14,7 +26,19 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
     NzFormModule,
     NzButtonModule,
     NzInputModule,
-    NzAlertModule
+    NzAlertModule,
+    NzPopoverModule,
+    NzSpaceModule,
+    NzUploadModule,
+    NzNotificationModule,
+    NzCardModule,
+    NzGridModule,
+    NzCollapseModule,
+    NzToolTipModule,
+    NzSelectModule,
+    NzSliderModule,
+    NzSpinModule,
+    NzListModule
   ]
 })
 export class NgZorroModule { }

@@ -19,7 +19,15 @@
         }
       },
       "auth": {
-        "gendacportal58050eae": {}
+        "gendacportal58050eae": {},
+        "true": {},
+        "gendacportal34aac0f2": {}
+      },
+      "function": {
+        "S3Trigger80271673": {
+          "deploymentBucketName": "amplify-gendacportal-dev-80138-deployment",
+          "s3Key": "amplify-builds/S3Trigger80271673-524b2f75514a5a697846-build.zip"
+        }
       }
     }
   }
