@@ -192,9 +192,10 @@ export class ViewCvsComponent implements OnInit {
             const template_id = outerThis.router.parseUrl(outerThis.router.url).queryParams["template_id"];
             const routeParams = outerThis.router.parseUrl(outerThis.router.url).queryParams;
             if(routeParams["searchTerm"] != null){
-              outerThis.searchValue = routeParams["searchTerm"] || "";
+              outerThis.searchValue = routeParams["searchTerm"];
             }
-            if(routeParams["skills"] != null){
+            if(routeParams["skills"] != undefined && routeParams["skills"] != []){
+              console.log(routeParams["skills"])
               let tmpSkills = [];
               if(typeof(routeParams["skills"]) == "string"){
                 tmpSkills.push(routeParams["skills"]);
@@ -203,12 +204,16 @@ export class ViewCvsComponent implements OnInit {
               }
                 outerThis.listOfSelectedValue = tmpSkills;
             }
-            if(routeParams["education"] != null){
+            if(routeParams["education"] != undefined && routeParams["education"] != []){
               let tmpEdu = [];
               if(typeof(routeParams["education"]) == "string"){
                 tmpEdu.push(routeParams["education"]);
               }else{
                 tmpEdu = routeParams["education"];
+              }
+
+              if(tmpEdu != null && (tmpEdu.length == 1 && tmpEdu[0] == '')){
+                tmpEdu = []
               }
               outerThis.listOfSelectedEducation = tmpEdu;
             }
@@ -302,6 +307,7 @@ export class ViewCvsComponent implements OnInit {
                   }
                 });
                 outerThis.allCVs = temp;
+                console.log(outerThis.listOfSelectedValue)
                 outerThis.filter();
             }};
 
@@ -363,6 +369,7 @@ export class ViewCvsComponent implements OnInit {
   }
 
   search(value: any) {
+    console.log(this.searchValue)
     this.searchValue = value.target.value;
     this.cvs.forEach(cv => {
       if(cv.firstName.toLowerCase().includes(value.target.value.toLowerCase()) ||
@@ -371,10 +378,13 @@ export class ViewCvsComponent implements OnInit {
       cv.email.toLowerCase().includes(value.target.value.toLowerCase()) ||
       cv.phoneNumber.toLowerCase().includes(value.target.value.toLowerCase())){
         cv.searchShowing = true;
+        cv.showing = true;
       }else{
         cv.searchShowing = false;
+        cv.showing = false;
       }
     });
+    console.log(this.cvs)
   }
 
   filter(){

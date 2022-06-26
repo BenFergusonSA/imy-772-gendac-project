@@ -216,7 +216,7 @@ export class CreatePositionComponent implements OnInit {
     this.validateForm = this.fb.group({
       name: [null, Validators.required],
       skills: [null, Validators.required],
-      education: [null, Validators.required],
+      education: [null],
     });
 
     const routeParams = this.router.parseUrl(this.router.url).queryParams;
@@ -225,7 +225,7 @@ export class CreatePositionComponent implements OnInit {
       this.title = "Edit Position Template";
       this.createBtnText = "Update";
       this.validateForm.controls['name'].setValue(routeParams["name"]);
-      if(routeParams["skills"] != null){
+      if(routeParams["skills"] != null || routeParams["skills"] != []){
         let tmpSkills = [];
         if(typeof(routeParams["skills"]) == "string"){
           tmpSkills.push(routeParams["skills"]);
@@ -234,7 +234,7 @@ export class CreatePositionComponent implements OnInit {
         }
           this.listOfSelectedValue = tmpSkills;
       }
-      if(routeParams["education"] != null){
+      if(routeParams["education"] != null || routeParams["education"] != []){
         let tmpEdu = [];
         if(typeof(routeParams["education"]) == "string"){
           tmpEdu.push(routeParams["education"]);

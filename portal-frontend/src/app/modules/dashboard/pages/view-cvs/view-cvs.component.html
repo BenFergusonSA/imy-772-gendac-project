@@ -81,10 +81,10 @@
   <nz-spin [nzSpinning]="isLoading" nzSimple></nz-spin>
   <ng-container *ngFor="let cv of cvs">
     <nz-collapse-panel
-      *ngIf="cv.searchShowing && cv.filterShowing"
+      *ngIf="cv.searchShowing && cv.filterShowing && cv.showing"
       [nzHeader]="cv.firstName + ' ' + cv.surname"
     >
-      <div style="margin:0;" *ngIf="cv.showing">
+      <div style="margin:0;">
         <div nz-row [nzGutter]="24">
           <div nz-col [nzSpan]="7" class="main">
             <nz-card>
